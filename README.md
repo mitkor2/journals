@@ -16,6 +16,9 @@ distributed by a commercial house; these are marked as exceptions, †).
     no-fee (diamond OA) only, hide ⚠-flagged, official speed data
   - sorting by SJR score, name, or JCR impact factor
   - responsive: data table on desktop, stacked cards on mobile; light/dark
+- **`match.html`** — "match my paper": paste a title and/or abstract (or load
+  a plain-text file) and get the journals ranked by scope fit, with matched
+  keywords shown; runs fully client-side, nothing is uploaded
 - **`data/journals.csv`** — the same 60 journals as flat data
 
 ## Verification

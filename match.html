@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Curated, verified shortlist of 60 engineering and computing journals from non-commercial publishers, in two quartile tiers with search and filters.">
+<meta name="description" content="Paste your paper's title and abstract to find which of the 60 verified non-commercial engineering journals fit it best.">
 <meta name="color-scheme" content="light dark">
-<title>Journal Shortlist — Verified Non-Commercial Venues</title>
+<title>Match My Paper — Journal Shortlist</title>
 <style>
 :root{
   --paper:#fafaf8;
@@ -247,14 +247,84 @@ td.num{color:var(--ink-faint);font-variant-numeric:tabular-nums;font-size:13px;p
 }
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
+<style>
+.match-form{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:20px;margin-top:22px;box-shadow:var(--shadow);
+  display:grid;gap:14px;
+}
+.match-form label{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:600;color:var(--ink-faint);display:block;margin-bottom:5px}
+.match-form input[type="text"],.match-form textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;
+  background:var(--paper);color:var(--ink);font:inherit;
+}
+.match-form textarea{min-height:150px;resize:vertical;line-height:1.55}
+.match-form input:focus,.match-form textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.form-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.go{
+  border:none;background:var(--accent);color:#fff;font:inherit;font-weight:600;
+  padding:11px 22px;border-radius:8px;cursor:pointer;font-size:15px;
+}
+:root[data-theme="dark"] .go{color:#191a1f}
+@media (prefers-color-scheme: dark){.go{color:#191a1f}}
+:root[data-theme="light"] .go{color:#fff}
+.go:hover{filter:brightness(1.08)}
+.go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.filebtn{
+  border:1px dashed var(--line);background:none;color:var(--ink-soft);
+  padding:10px 16px;border-radius:8px;font:inherit;font-size:13.5px;cursor:pointer;
+}
+.filebtn:hover{border-color:var(--ink-faint)}
+.filehint{font-size:12.5px;color:var(--ink-faint)}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+/* results */
+.results{margin-top:28px;display:grid;gap:12px}
+.rhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:30px}
+.rhead h2{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-size:21px;font-weight:600;margin:0}
+.rhead .rnote{color:var(--ink-faint);font-size:13px}
+.mcard{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:44px 1fr;gap:4px 14px;
+}
+.mrank{
+  grid-row:1 / span 3;font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:26px;font-weight:600;color:var(--ink-faint);font-variant-numeric:tabular-nums;
+  line-height:1;padding-top:3px;
+}
+.mtop{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.mname{font-weight:650;font-size:16px;line-height:1.35}
+.msite{font-size:12.5px;color:var(--ink-faint)}
+.mmeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;align-items:center}
+.mmeta .tier-tag{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2.5px 9px;border-radius:999px}
+.mfee{font-size:13px;margin-top:7px}
+.mfee .diamond{color:var(--diamond);font-weight:600}
+.mwarn{font-size:12.5px;color:var(--warn);margin-top:6px;line-height:1.45}
+.mwhy{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;align-items:center}
+.mwhy .wlab{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-faint);font-weight:600;margin-right:3px}
+.kwchip{
+  font-size:12px;background:var(--accent-soft);color:var(--accent);
+  border-radius:5px;padding:2px 8px;font-weight:600;
+}
+.scorebar{grid-column:1 / -1;height:4px;background:var(--line-soft);border-radius:2px;margin-top:12px;overflow:hidden}
+.scorebar i{display:block;height:100%;background:var(--accent);border-radius:2px}
+.nores{
+  padding:34px 20px;text-align:center;color:var(--ink-faint);font-size:14.5px;
+  background:var(--panel);border:1px dashed var(--line);border-radius:12px;
+}
+@media (max-width:640px){
+  .mcard{grid-template-columns:1fr}
+  .mrank{grid-row:auto;font-size:18px;padding:0}
+}
+</style>
 </head>
 <body>
 <div class="wrap">
   <header class="page">
     <div class="head-row">
       <div class="head-main">
-        <p class="eyebrow">Verified 17 July 2026 · SCImago / Scopus / JCR / DOAJ</p>
-        <h1>Journal Shortlist — Verified Non-Commercial Venues</h1>
+        <p class="eyebrow">60 verified venues · data of 17 July 2026</p>
+        <h1>Which journals fit my paper?</h1>
       </div>
       <button class="theme-btn" id="themeBtn" aria-label="Switch between light and dark theme">
         <svg id="iconSun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>
@@ -262,91 +332,44 @@ td.num{color:var(--ink-faint);font-variant-numeric:tabular-nums;font-size:13px;p
         <span class="tlabel" id="tlabel">Dark</span>
       </button>
     </div>
-    <p class="sub">Engineering and computing journals from university, academy, society, and government publishers — no purely commercial houses. Two tiers by best current quartile: <strong>Tier 1</strong> reaches Q2 or better in at least one ranking system (SJR, CiteScore, or JCR); <strong>Tier 2</strong> tops out at Q3. Where systems disagree, every badge is shown — check which system your institution counts.</p>
+    <p class="sub">Paste your paper's title and/or abstract — or load a plain-text file — and the matcher scores it against the scope profile of every journal in the verified shortlist. Matching runs entirely in your browser; nothing is uploaded anywhere.</p>
     <nav class="tabs" aria-label="Pages">
-      <a class="tab on" href="index.html" aria-current="page">Shortlist</a>
-      <a class="tab" href="match.html">Match my paper</a>
+      <a class="tab" href="index.html">Shortlist</a>
+      <a class="tab on" href="match.html" aria-current="page">Match my paper</a>
     </nav>
   </header>
 
-  <div class="stats" id="stats" role="region" aria-label="Summary statistics"></div>
+  <form class="match-form" id="form">
+    <div>
+      <label for="title">Paper title</label>
+      <input type="text" id="title" placeholder="e.g. Deep-learning-based fault diagnosis for wind-turbine gearboxes" autocomplete="off">
+    </div>
+    <div>
+      <label for="abstract">Abstract and/or keywords</label>
+      <textarea id="abstract" placeholder="Paste your abstract here… The more text, the better the match."></textarea>
+    </div>
+    <div class="form-foot">
+      <button type="submit" class="go">Find matching journals</button>
+      <button type="button" class="filebtn" id="fileBtn">Load from file (.txt, .md)</button>
+      <input type="file" id="file" accept=".txt,.md,.text,.markdown,text/plain" class="hidden">
+      <span class="filehint" id="fileHint">PDF/Word? Copy the text and paste it above.</span>
+      <span class="opts">
+        <button class="chip" type="button" id="oNoFee" aria-pressed="false">♦ No-fee only</button>
+        <button class="chip" type="button" id="oClean" aria-pressed="false">Hide ⚠ flagged</button>
+        <button class="chip" type="button" id="oT1" aria-pressed="false">Tier 1 only</button>
+      </span>
+    </div>
+  </form>
 
-  <div class="toolbar" role="region" aria-label="Filters">
-    <div class="row">
-      <div class="search">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
-        <input id="q" type="search" placeholder="Search journals, publishers, countries, notes…" aria-label="Search journals">
-      </div>
-      <select id="fCat" aria-label="Filter by tier">
-        <option value="">All tiers</option>
-        <option value="Q2+">Tier 1 · Q2 or better</option>
-        <option value="Q3">Tier 2 · Q3</option>
-      </select>
-      <select id="fField" aria-label="Filter by field"><option value="">All fields</option></select>
-      <select id="fQuart" aria-label="Filter by best quartile">
-        <option value="">Best quartile: any</option>
-        <option value="Q1">Best = Q1</option>
-        <option value="Q2">Best = Q2</option>
-        <option value="Q3">Best = Q3</option>
-      </select>
-      <select id="fCountry" aria-label="Filter by country"><option value="">All countries</option></select>
-      <select id="fPtype" aria-label="Filter by publisher type"><option value="">All publisher types</option></select>
-    </div>
-    <div class="row">
-      <button class="chip" id="fNoFee" aria-pressed="false">♦ No-fee only</button>
-      <button class="chip" id="fClean" aria-pressed="false">Hide ⚠ flagged</button>
-      <button class="chip" id="fSpeed" aria-pressed="false">Has official speed data</button>
-      <select id="sort" aria-label="Sort order">
-        <option value="sjr">Sort: SJR score ↓</option>
-        <option value="name">Sort: name A–Z</option>
-        <option value="if">Sort: JCR impact factor ↓</option>
-      </select>
-      <button class="reset" id="reset">Reset all</button>
-      <span class="count" id="count"></span>
-    </div>
+  <div class="rhead hidden" id="rhead">
+    <h2>Best-fitting journals</h2>
+    <span class="rnote" id="rnote"></span>
   </div>
-
-  <section class="tier" id="tier1">
-    <div class="tier-head">
-      <span class="tier-tag t1">Tier 1</span>
-      <h2>Q2 or better</h2>
-      <span class="tier-note" id="n1"></span>
-    </div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr>
-          <th>#</th><th>Journal</th><th>Publisher</th><th>Quartiles &amp; metrics</th><th>Fees</th><th>Speed</th><th>Flags</th>
-        </tr></thead>
-        <tbody id="b1"></tbody>
-      </table>
-      <div class="empty hidden" id="e1">No Tier 1 journals match the current filters.</div>
-    </div>
-  </section>
-
-  <section class="tier" id="tier2">
-    <div class="tier-head">
-      <span class="tier-tag t2">Tier 2</span>
-      <h2>Q3 — best current quartile</h2>
-      <span class="tier-note" id="n2"></span>
-    </div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr>
-          <th>#</th><th>Journal</th><th>Publisher</th><th>Quartiles &amp; metrics</th><th>Fees</th><th>Speed</th><th>Flags</th>
-        </tr></thead>
-        <tbody id="b2"></tbody>
-      </table>
-      <div class="empty hidden" id="e2">No Tier 2 journals match the current filters.</div>
-    </div>
-  </section>
+  <div class="results" id="results"></div>
 
   <div class="legend">
-    <span><span class="qb Q1">Q1</span> <span class="qb Q2">Q2</span> <span class="qb Q3">Q3</span> <span class="qb Q4">Q4</span> quartile by system (SJR / CS = CiteScore / JCR)</span>
-    <span><span class="qb idx">SCIE</span> <span class="qb idx">ESCI</span> Web of Science index only, no current quartile</span>
-    <span>♦ diamond / no-APC confirmed or reported</span>
-    <span>⚠ integrity or screening flag — apply due diligence</span>
-    <span>† owned by a non-commercial body, distributed by a commercial house (exception rule)</span>
-    <span>Excluded after verification: Facta Universitatis E&amp;E and Mechanika (KTU) — Q4 in all current systems.</span>
+    <span>Scores are keyword-scope matches, not guarantees — always read the journal's own aims &amp; scope before submitting.</span>
+    <span>♦ diamond / no-APC · ⚠ integrity or screening flag · † commercially distributed exception</span>
   </div>
 </div>
 
@@ -414,121 +437,187 @@ const J=[
 {"c":"Q3","n":"Journal of Universal Computer Science (J.UCS)","w":"lib.jucs.org","p":"J.UCS Consortium (TU Graz-led)","pt":"Institute / nonprofit","co":"AT","f":"CS & IT","sq":"Q3","sv":null,"sy":24,"cq":null,"jq":null,"jf":"1.0","fee":{"t":"nofee","v":"♦ Diamond OA — no APC"},"sp":null,"warn":null,"note":"Best no-cost CS option; est. 1994, monthly."},
 {"c":"Q3","n":"Opto-Electronics Review","w":"journals.pan.pl/opelre","p":"Polish Academy of Sciences + SEP","pt":"Academy","co":"PL","f":"Electrical & Electronics","sq":"Q3","sv":null,"sy":24,"cq":null,"jq":"SCIE","jf":"~1.0","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Optical sensors, image processing, photonics; CiteScore 5.0, SNIP 0.97."}
 ];
+// Field-level vocabulary: weight 1 per hit.
+const FIELD_KW={
+"CS & IT":["artificial intelligence","machine learning","deep learning","neural network","algorithm","software","information system","data mining","big data","computing","computer","network","cybersecurity","security","cloud","internet of things","iot","image processing","pattern recognition","optimization","natural language","classification","clustering","blockchain","database"],
+"Electrical & Electronics":["electronic","signal processing","circuit","antenna","rf","wireless","telecommunication","5g","control system","sensor","embedded","power electronics","microwave","radar","semiconductor","fpga","instrumentation","measurement","automation","robotics"],
+"Mechanical":["mechanical","mechanics","fatigue","fracture","vibration","tribology","cfd","fluid","thermal","manufacturing","material","structural","finite element","dynamics","kinematics","composite","welding","machining"],
+"Civil & Transport":["civil engineering","concrete","structural","bridge","pavement","geotechnical","construction","transport","traffic","logistics","railway","road","building","infrastructure","seismic","soil","asphalt","tunnel"],
+"Energy & Environment":["energy","renewable","solar","wind","biomass","power plant","thermodynamic","heat transfer","environmental","pollution","water","wastewater","waste","sustainability","emission","nuclear","mining","fuel","combustion","battery","hydrogen"],
+"Industrial & Management":["manufacturing","production","reliability","maintenance","industrial engineering","management","logistics","supply chain","quality","lean","scheduling","optimization","simulation","industry 4.0","ergonomics"],
+"Multidisciplinary":["engineering","applied science","technology","interdisciplinary"]
+};
+// Journal-specific scope terms: weight 3 per hit. Keyed by website (unique).
+const KW={
+"romjist.ro":["information science","information technology","telecommunications","computer science"],
+"journals.vilniustech.lt":["construction management","civil engineering","building information","project management","construction technology"],
+"informatica.vu.lt":["optimization","pattern recognition","automation","operations research","control","data analysis"],
+"cit.iit.bas.bg":["artificial intelligence","pattern recognition","signal processing","image processing","control system","cybernetics"],
+"itc.ktu.lt":["information technology","control system","software engineering","automation","telematics"],
+"amcs.uz.zgora.pl":["control theory","applied mathematics","fault diagnosis","robotics","neural network","fault tolerant"],
+"acta.uni-obuda.hu":["computational intelligence","robotics","fuzzy","applied informatics","mechatronics","cyber-physical"],
+"comsis.org":["software engineering","information system","database","distributed system","model-driven","web"],
+"via Wiley":["telecommunication","wireless","5g","6g","semiconductor","ict","network","electronics","photonics"],
+"via Springer":["engineering science","mechanical","electrical","civil","chemical engineering","aerospace"],
+"via Taylor & Francis":["control system","robotics","computer vision","signal processing","automation","power system","estimation"],
+"scientiairanica.sharif.edu":["civil","mechanical","industrial engineering","chemical engineering","materials","transactions"],
+"etasr.com":["applied engineering","engineering technology","applied science"],
+"univagora.ro":["distributed computing","fuzzy system","soft computing","communication","control","decision making"],
+"journals.pan.pl/bpasts":["technical sciences","control","materials science","power system","photonics","thermodynamics"],
+"journals.tubitak.gov.tr/elektrik":["electrical engineering","signal processing","artificial intelligence","telecommunication","control","power"],
+"ijtech.eng.ui.ac.id":["sustainable technology","process engineering","manufacturing","infrastructure","industrial"],
+"sv-jme.eu":["mechanical engineering","fluid mechanics","thermodynamics","manufacturing","mechatronics","vibration","machine design"],
+"sdewes.org/jsdewes":["sustainable development","energy system","water","environment system","district heating","smart grid","energy planning"],
+"lib.jucs.org":["computer science","software","theory of computation","human-computer interaction","knowledge management"],
+"wydawnictwo.pan.pl/mms":["metrology","measurement","instrumentation","sensor","calibration","uncertainty","testing"],
+"journals.pan.pl":["control theory","optimization","dynamical system","robust control","predictive control"],
+"journals.pan.pl/opelre":["optoelectronics","photonics","optical sensor","laser","infrared","image processing","detector"],
+"ijet.pl":["electronics","telecommunication","antenna","microwave","network","radiocommunication"],
+"radioeng.cz":["radio","rf","wireless","antenna","microwave","signal processing","radar","propagation"],
+"eejournal.ktu.lt":["electrical engineering","electronics","power electronics","automation","signal processing","renewable"],
+"cai.sk":["computing","informatics","artificial intelligence","parallel computing","software","agent"],
+"aece.ro":["electrical engineering","computer engineering","power electronics","embedded system","signal processing"],
+"jips-k.org":["information processing","network","multimedia","security","distributed system","pattern recognition"],
+"ijeces.ferit.hr":["electrical engineering","computer engineering","power system","communication","electronics"],
+"iajit.org":["information technology","network","security","artificial intelligence","software engineering","arabic"],
+"engineeringscience.rs":["applied engineering","energy efficiency","renewable","industrial engineering","maintenance"],
+"tehnicki-vjesnik.com":["engineering","technology","manufacturing","materials"],
+"journals.itb.ac.id":["ict","information technology","communication","electronics","informatics"],
+"bjmc.lu.lv":["computer science","mathematics","informatics","algorithm","formal methods"],
+"ijece.iaescore.com":["electrical engineering","computer engineering","power","telecommunication","machine learning","instrumentation"],
+"casopisi.junis.ni.ac.rs/index.php/FUMechEng":["tribology","mechanics","mechatronics","mechanical engineering","friction","wear","contact mechanics"],
+"jacm.scu.ac.ir":["computational mechanics","finite element","solid mechanics","fluid mechanics","nonlinear dynamics","numerical method","meshless"],
+"lajss.org":["solid","structure","structural mechanics","composite","impact","finite element","plate","shell"],
+"fracturae.com":["fracture mechanics","fatigue","structural integrity","crack","damage mechanics","failure analysis","fractography"],
+"journals.pan.pl/ame":["machine design","mechanical engineering","dynamics","mechanism","gear","rotor"],
+"journals.vilniustech.lt/index.php/Transport":["transport","logistics","traffic","railway","road transport","transport economics","vehicle","freight"],
+"traffic2.fpz.hr":["traffic engineering","transport planning","intelligent transport","logistics","mobility","transport safety"],
+"pp.bme.hu/ci":["civil engineering","structural engineering","geotechnics","concrete","construction material","earthquake"],
+"bjrbe-journals.rtu.lv/bjrbe":["road","bridge","pavement","asphalt","highway","bridge engineering","binder"],
+"journals.pan.pl/ace":["civil engineering","structural","geotechnical","construction management","concrete","steel structure"],
+"svf.uniza.sk/cee":["civil engineering","transport structure","environmental engineering","construction","railway"],
+"casopis-gradjevinar.hr":["construction","structure","building material","civil engineering","concrete","bridge"],
+"journals.pan.pl/ather":["thermodynamics","heat transfer","combustion","power cycle","exergy","two-phase"],
+"jten.yildiz.edu.tr":["thermal","heat transfer","hvac","combustion","refrigeration","energy system","heat exchanger"],
+"ijred.cbiore.id":["renewable energy","biomass","solar","wind","biofuel","energy policy","photovoltaic","geothermal"],
+"journals.pan.pl/aep":["environmental protection","pollution","air quality","wastewater","soil","remediation"],
+"jeeng.net":["ecological engineering","waste management","land reclamation","environmental technology","water treatment","biogas"],
+"actamont.tuke.sk":["mining","geology","geotechnics","raw material","earth resource","mineral processing","tunnelling"],
+"via Elsevier (KNS)":["nuclear","reactor","radiation","nuclear safety","thermal hydraulics","nuclear fuel","dosimetry"],
+"ein.org.pl":["reliability","maintenance","diagnostics","prognostics","failure analysis","asset management","degradation","remaining useful life"],
+"journals.pan.pl/mper":["production engineering","operations management","manufacturing system","industry 4.0","quality management","scheduling"],
+"sajie.journals.ac.za":["industrial engineering","operations research","supply chain","optimization","simulation","facility"],
+"jart.icat.unam.mx":["applied research","technology","instrumentation","engineering application","materials"],
+"jestech.karabuk.edu.tr":["engineering science","materials","mechanical","electrical","energy","interdisciplinary"]
+};
+
 const RANK={Q1:1,Q2:2,Q3:3,Q4:4};
 J.forEach((j,i)=>{
   j.i=i+1;
   const qs=[j.sq,j.cq,j.jq].filter(q=>RANK[q]);
   j.best=qs.length?qs.sort((a,b)=>RANK[a]-RANK[b])[0]:null;
   j.noFee=j.fee.t==="nofee";
-  j.ifNum=j.jf?parseFloat(j.jf):null;
-  j.hay=[j.n,j.w,j.p,j.pt,j.f,j.co,COUNTRY[j.co]||"",j.fee.v||"",j.sp||"",j.warn||"",j.note||"",j.sq||"",j.jq||"",j.cq||""].join(" ").toLowerCase();
 });
 const $=id=>document.getElementById(id);
-
-const countries=[...new Set(J.map(j=>j.co))].sort((a,b)=>(COUNTRY[a]||a).localeCompare(COUNTRY[b]||b));
-const ptypes=[...new Set(J.map(j=>j.pt))].sort();
-const fields=[...new Set(J.map(j=>j.f))].sort();
-countries.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=(COUNTRY[c]||c)+" ("+c+")";$("fCountry").appendChild(o);});
-ptypes.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;$("fPtype").appendChild(o);});
-fields.forEach(f=>{const o=document.createElement("option");o.value=f;o.textContent=f;$("fField").appendChild(o);});
-
-const state={q:"",cat:"",field:"",quart:"",country:"",ptype:"",noFee:false,clean:false,speed:false,sort:"sjr"};
-
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
-function feeCell(j){
-  const f=j.fee;
-  if(f.t==="nofee")return '<span class="diamond">'+esc(f.v||"♦ no fee")+'</span>';
-  if(f.t==="apc")return esc(f.v);
-  return '<span class="verify">'+esc(f.v||"fees: verify on site")+'</span>';
-}
 function badge(sys,q,extra){
   return '<span class="qb '+(RANK[q]?q:"idx")+'"><span class="sys">'+sys+'</span>'+esc(q)+(extra?' '+extra:'')+'</span>';
 }
 function badges(j){
   let h="";
-  if(j.sq)h+=badge("SJR",j.sq,j.sv!=null?esc(j.svTxt||j.sv.toFixed(3))+" ’"+j.sy:"’"+j.sy);
+  if(j.sq)h+=badge("SJR",j.sq,j.sv!=null?esc(j.svTxt||j.sv.toFixed(3)):"");
   if(j.cq)h+=badge("CS",j.cq,"");
   if(j.jq)h+=badge("JCR",j.jq,j.jf?"IF "+esc(j.jf):"");
   else if(j.jf)h+='<span class="qb idx"><span class="sys">JCR</span>IF '+esc(j.jf)+'</span>';
-  return '<div class="badges">'+h+'</div>';
+  return h;
 }
-function row(j){
-  return '<tr><td class="num">'+j.i+'</td>'+
-  '<td class="cell-journal"><div class="jname">'+esc(j.n)+(j.exc?' †':'')+'</div><div class="jsite">'+esc(j.w)+'</div><span class="jfield">'+esc(j.f)+'</span>'+(j.note?'<div class="jnote">'+esc(j.note)+'</div>':'')+'</td>'+
-  '<td class="pub cell-pub"><div class="pname">'+esc(j.p)+'<span class="cc">'+j.co+'</span></div><div class="ptype">'+esc(j.pt)+'</div></td>'+
-  '<td class="cell-q">'+badges(j)+'</td>'+
-  '<td class="fee cell-fee">'+feeCell(j)+'</td>'+
-  '<td class="speed cell-speed">'+(j.sp?esc(j.sp):'<span class="dash">—</span>')+'</td>'+
-  '<td class="cell-flag">'+(j.warn?'<span class="flag">⚠ '+esc(j.warn)+'</span>':'<span class="dash">—</span>')+'</td></tr>';
-}
-function pass(j){
-  if(state.cat&&j.c!==state.cat)return false;
-  if(state.field&&j.f!==state.field)return false;
-  if(state.quart&&j.best!==state.quart)return false;
-  if(state.country&&j.co!==state.country)return false;
-  if(state.ptype&&j.pt!==state.ptype)return false;
-  if(state.noFee&&!j.noFee)return false;
-  if(state.clean&&j.warn)return false;
-  if(state.speed&&!j.sp)return false;
-  if(state.q){
-    for(const term of state.q.split(/\s+/).filter(Boolean)){
-      if(!j.hay.includes(term))return false;
-    }
-  }
-  return true;
-}
-function cmp(a,b){
-  if(state.sort==="name")return a.n.localeCompare(b.n);
-  if(state.sort==="if")return (b.ifNum??-1)-(a.ifNum??-1)||a.n.localeCompare(b.n);
-  return (b.sv??-1)-(a.sv??-1)||a.n.localeCompare(b.n);
-}
-function render(){
-  const vis=J.filter(pass).sort(cmp);
-  const t1=vis.filter(j=>j.c==="Q2+"),t2=vis.filter(j=>j.c==="Q3");
-  const T1=J.filter(j=>j.c==="Q2+").length,T2=J.length-T1;
-  $("b1").innerHTML=t1.map(row).join("");
-  $("b2").innerHTML=t2.map(row).join("");
-  $("e1").classList.toggle("hidden",t1.length>0);
-  $("e2").classList.toggle("hidden",t2.length>0);
-  $("tier1").classList.toggle("hidden",state.cat==="Q3");
-  $("tier2").classList.toggle("hidden",state.cat==="Q2+");
-  $("n1").textContent=t1.length+" of "+T1+" shown";
-  $("n2").textContent=t2.length+" of "+T2+" shown";
-  $("count").innerHTML="<strong>"+vis.length+"</strong> of "+J.length+" journals";
-}
-function stats(){
-  const noFee=J.filter(j=>j.noFee).length;
-  const flagged=J.filter(j=>j.warn).length;
-  $("stats").innerHTML=
-    '<div class="stat"><div class="v">'+J.length+'</div><div class="l">Journals</div></div>'+
-    '<div class="stat"><div class="v">'+J.filter(j=>j.c==="Q2+").length+'</div><div class="l">Tier 1 · Q2+</div></div>'+
-    '<div class="stat diamond"><div class="v">'+noFee+'</div><div class="l">♦ No-fee routes</div></div>'+
-    '<div class="stat"><div class="v">'+countries.length+'</div><div class="l">Countries</div></div>'+
-    '<div class="stat flagged"><div class="v">'+flagged+'</div><div class="l">⚠ Flagged</div></div>';
-}
-$("q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render();});
-$("fCat").addEventListener("change",e=>{state.cat=e.target.value;render();});
-$("fField").addEventListener("change",e=>{state.field=e.target.value;render();});
-$("fQuart").addEventListener("change",e=>{state.quart=e.target.value;render();});
-$("fCountry").addEventListener("change",e=>{state.country=e.target.value;render();});
-$("fPtype").addEventListener("change",e=>{state.ptype=e.target.value;render();});
-$("sort").addEventListener("change",e=>{state.sort=e.target.value;render();});
-[["fNoFee","noFee"],["fClean","clean"],["fSpeed","speed"]].forEach(([id,key])=>{
+
+const opts={noFee:false,clean:false,t1:false};
+[["oNoFee","noFee"],["oClean","clean"],["oT1","t1"]].forEach(([id,key])=>{
   $(id).addEventListener("click",()=>{
-    state[key]=!state[key];
-    $(id).setAttribute("aria-pressed",state[key]);
-    render();
+    opts[key]=!opts[key];
+    $(id).setAttribute("aria-pressed",opts[key]);
+    if(lastText)run();
   });
 });
-$("reset").addEventListener("click",()=>{
-  state.q=state.cat=state.field=state.quart=state.country=state.ptype="";
-  state.noFee=state.clean=state.speed=false;state.sort="sjr";
-  $("q").value="";["fCat","fField","fQuart","fCountry","fPtype"].forEach(id=>$(id).value="");
-  $("sort").value="sjr";
-  ["fNoFee","fClean","fSpeed"].forEach(id=>$(id).setAttribute("aria-pressed","false"));
-  render();
+
+let lastText="";
+function countHits(text,term){
+  // whole-word-ish match, singular/plural tolerant on the last word
+  const t=term.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  const re=new RegExp("(?:^|[^a-z0-9])"+t+"(?:s|es|)?(?![a-z0-9])","g");
+  const m=text.match(re);
+  return m?m.length:0;
+}
+function score(j,text){
+  const hits=[];
+  let s=0;
+  for(const term of (KW[j.w]||[])){
+    const n=countHits(text,term);
+    if(n>0){s+=3*Math.min(n,3);hits.push(term);}
+  }
+  for(const term of (FIELD_KW[j.f]||[])){
+    const n=countHits(text,term);
+    if(n>0){s+=1*Math.min(n,3);if(!hits.includes(term))hits.push(term);}
+  }
+  return {s,hits};
+}
+function run(){
+  const title=$("title").value.trim(), abs=$("abstract").value.trim();
+  const text=((title+" ")+(title+" ")+abs).toLowerCase();  // title counted twice
+  lastText=text.trim();
+  if(!lastText){$("rhead").classList.add("hidden");$("results").innerHTML="";return;}
+  let scored=J.map(j=>({j,...score(j,text)})).filter(r=>r.s>0);
+  if(opts.noFee)scored=scored.filter(r=>r.j.noFee);
+  if(opts.clean)scored=scored.filter(r=>!r.j.warn);
+  if(opts.t1)scored=scored.filter(r=>r.j.c==="Q2+");
+  scored.sort((a,b)=>b.s-a.s||( (RANK[a.j.best]||9)-(RANK[b.j.best]||9) ));
+  const top=scored.slice(0,12);
+  $("rhead").classList.remove("hidden");
+  $("rnote").textContent=scored.length
+    ? top.length+" of "+scored.length+" scope matches shown — ranked by keyword fit"
+    : "";
+  if(!top.length){
+    $("results").innerHTML='<div class="nores">No scope match found with the current text and filters. Try adding more of the abstract, or relax the filters above.</div>';
+    return;
+  }
+  const max=top[0].s;
+  $("results").innerHTML=top.map((r,idx)=>{
+    const j=r.j;
+    const tierTag=j.c==="Q2+"
+      ?'<span class="tier-tag t1">Tier 1 · Q2+</span>'
+      :'<span class="tier-tag t2">Tier 2 · Q3</span>';
+    return '<div class="mcard">'+
+      '<div class="mrank">'+(idx+1)+'</div>'+
+      '<div>'+
+        '<div class="mtop"><span class="mname">'+esc(j.n)+(j.exc?' †':'')+'</span><span class="msite">'+esc(j.w)+' · '+esc(COUNTRY[j.co]||j.co)+'</span></div>'+
+        '<div class="mmeta">'+tierTag+badges(j)+'<span class="jfield">'+esc(j.f)+'</span></div>'+
+        '<div class="mfee">'+(j.noFee?'<span class="diamond">'+esc(j.fee.v||"♦ no fee")+'</span>':esc(j.fee.v||"fees: verify on site"))+
+          (j.sp?' · <span style="color:var(--ink-soft)">'+esc(j.sp)+'</span>':'')+'</div>'+
+        (j.warn?'<div class="mwarn">⚠ '+esc(j.warn)+'</div>':'')+
+        '<div class="mwhy"><span class="wlab">Matched</span>'+r.hits.slice(0,8).map(h=>'<span class="kwchip">'+esc(h)+'</span>').join('')+
+          (r.hits.length>8?'<span class="filehint">+'+(r.hits.length-8)+' more</span>':'')+'</div>'+
+      '</div>'+
+      '<div class="scorebar"><i style="width:'+Math.max(6,Math.round(100*r.s/max))+'%"></i></div>'+
+    '</div>';
+  }).join("");
+}
+$("form").addEventListener("submit",e=>{e.preventDefault();run();});
+
+// file loading (plain text)
+$("fileBtn").addEventListener("click",()=>$("file").click());
+$("file").addEventListener("change",e=>{
+  const f=e.target.files&&e.target.files[0];
+  if(!f)return;
+  if(f.size>2*1024*1024){$("fileHint").textContent="File too large (max 2 MB) — paste the text instead.";return;}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    $("abstract").value=String(reader.result||"").slice(0,20000);
+    $("fileHint").textContent="Loaded “"+f.name+"” — press Find matching journals.";
+  };
+  reader.onerror=()=>{$("fileHint").textContent="Couldn't read that file — paste the text instead.";};
+  reader.readAsText(f);
 });
-stats();render();
 
 // --- theme toggle ---
 (function(){
@@ -544,7 +633,6 @@ stats();render();
   function apply(theme){
     root.dataset.theme=theme;
     const dark=theme==="dark";
-    // Button shows the theme you would switch TO.
     sun.classList.toggle("hidden",!dark);
     moon.classList.toggle("hidden",dark);
     label.textContent=dark?"Light":"Dark";
