@@ -27,3 +27,10 @@ anomalous citation metrics, or advertised ultra-fast review.
 
 Excluded after verification (Q4 in all current systems):
 Facta Universitatis, Series: Electronics and Energetics; Mechanika (KTU).
+
+## GitHub Pages
+
+The page is ready to serve as-is. After merging to `main`, enable it once in
+**Settings → Pages → Build and deployment**: Source = *Deploy from a branch*,
+Branch = `main`, folder = `/ (root)`. The site will be available at
+<https://mitkor2.github.io/journals/>.
