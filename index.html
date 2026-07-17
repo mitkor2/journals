@@ -1,0 +1,490 @@
+<title>Journal Shortlist — Verified Non-Commercial Venues</title>
+<style>
+:root{
+  --paper:#fafaf8;
+  --panel:#ffffff;
+  --ink:#22242b;
+  --ink-soft:#5c5f6b;
+  --ink-faint:#9295a1;
+  --line:#e3e2dc;
+  --line-soft:#eeede8;
+  --accent:#8a3040;
+  --accent-soft:#f6e9ec;
+  --q1-bg:#e2f2e6;--q1-fg:#1d6b35;
+  --q2-bg:#e2ecf8;--q2-fg:#255a9b;
+  --q3-bg:#faf0d8;--q3-fg:#8a6410;
+  --q4-bg:#f8e4e2;--q4-fg:#a13a30;
+  --idx-bg:#ececf2;--idx-fg:#565a70;
+  --diamond:#1d6b35;
+  --warn:#b4540a;
+  --chip-on-bg:#22242b;
+  --chip-on-fg:#fafaf8;
+  --shadow:0 1px 3px rgba(30,30,40,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#191a1f;--panel:#20222a;--ink:#e8e7e2;--ink-soft:#a5a7b2;--ink-faint:#71747f;
+    --line:#33353f;--line-soft:#2a2c35;--accent:#d98a97;--accent-soft:#3a2229;
+    --q1-bg:#1d3a26;--q1-fg:#8fd3a3;--q2-bg:#1e3049;--q2-fg:#93bdea;
+    --q3-bg:#3d3218;--q3-fg:#e0bd63;--q4-bg:#43221f;--q4-fg:#e79a90;
+    --idx-bg:#2c2e3a;--idx-fg:#a8abbd;--diamond:#8fd3a3;--warn:#e69a55;
+    --chip-on-bg:#e8e7e2;--chip-on-fg:#191a1f;--shadow:0 1px 3px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#191a1f;--panel:#20222a;--ink:#e8e7e2;--ink-soft:#a5a7b2;--ink-faint:#71747f;
+  --line:#33353f;--line-soft:#2a2c35;--accent:#d98a97;--accent-soft:#3a2229;
+  --q1-bg:#1d3a26;--q1-fg:#8fd3a3;--q2-bg:#1e3049;--q2-fg:#93bdea;
+  --q3-bg:#3d3218;--q3-fg:#e0bd63;--q4-bg:#43221f;--q4-fg:#e79a90;
+  --idx-bg:#2c2e3a;--idx-fg:#a8abbd;--diamond:#8fd3a3;--warn:#e69a55;
+  --chip-on-bg:#e8e7e2;--chip-on-fg:#191a1f;--shadow:0 1px 3px rgba(0,0,0,.35);
+}
+:root[data-theme="light"]{
+  --paper:#fafaf8;--panel:#ffffff;--ink:#22242b;--ink-soft:#5c5f6b;--ink-faint:#9295a1;
+  --line:#e3e2dc;--line-soft:#eeede8;--accent:#8a3040;--accent-soft:#f6e9ec;
+  --q1-bg:#e2f2e6;--q1-fg:#1d6b35;--q2-bg:#e2ecf8;--q2-fg:#255a9b;
+  --q3-bg:#faf0d8;--q3-fg:#8a6410;--q4-bg:#f8e4e2;--q4-fg:#a13a30;
+  --idx-bg:#ececf2;--idx-fg:#565a70;--diamond:#1d6b35;--warn:#b4540a;
+  --chip-on-bg:#22242b;--chip-on-fg:#fafaf8;--shadow:0 1px 3px rgba(30,30,40,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+.wrap{max-width:1320px;margin:0 auto;padding:28px 24px 64px}
+header.page h1{
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:clamp(23px,3.2vw,34px);font-weight:600;letter-spacing:-.01em;
+  margin:0 0 6px;text-wrap:balance;
+}
+header.page .sub{color:var(--ink-soft);margin:0;max-width:72ch}
+header.page .sub strong{color:var(--ink)}
+.eyebrow{
+  text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:600;
+  color:var(--accent);margin:0 0 8px;
+}
+/* ---------- stat strip ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:20px}
+.stat{
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;box-shadow:var(--shadow);
+}
+.stat .v{font-size:22px;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat .l{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-faint);margin-top:2px}
+.stat.diamond .v{color:var(--diamond)}
+.stat.flagged .v{color:var(--warn)}
+/* ---------- toolbar ---------- */
+.toolbar{
+  position:sticky;top:0;z-index:10;background:var(--paper);
+  padding:12px 0 12px;margin-top:20px;border-bottom:1px solid var(--line);
+}
+.toolbar .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar .row + .row{margin-top:8px}
+.search{flex:1 1 240px;min-width:200px;position:relative}
+.search input{
+  width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;
+  background:var(--panel);color:var(--ink);font:inherit;box-shadow:var(--shadow);
+}
+.search input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.45;pointer-events:none}
+select{
+  padding:8px 10px;border:1px solid var(--line);border-radius:8px;
+  background:var(--panel);color:var(--ink);font:inherit;font-size:14px;box-shadow:var(--shadow);
+  max-width:210px;flex:0 1 auto;
+}
+select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.chip{
+  border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);
+  padding:7px 13px;border-radius:999px;font:inherit;font-size:13.5px;cursor:pointer;
+  box-shadow:var(--shadow);transition:background .12s,color .12s;
+}
+.chip:hover{border-color:var(--ink-faint)}
+.chip[aria-pressed="true"]{background:var(--chip-on-bg);color:var(--chip-on-fg);border-color:var(--chip-on-bg)}
+.chip:focus-visible,select:focus-visible,.reset:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.reset{
+  border:none;background:none;color:var(--accent);font:inherit;font-size:13.5px;
+  cursor:pointer;padding:7px 4px;text-decoration:underline;text-underline-offset:3px;
+}
+.count{margin-left:auto;color:var(--ink-soft);font-size:13.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.count strong{color:var(--ink)}
+/* ---------- tier sections ---------- */
+.tier{margin-top:32px}
+.tier-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.tier-head h2{
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:21px;font-weight:600;margin:0;
+}
+.tier-head .tier-tag{
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:999px;
+}
+.tier-tag.t1{background:var(--q2-bg);color:var(--q2-fg)}
+.tier-tag.t2{background:var(--q3-bg);color:var(--q3-fg)}
+.tier-head .tier-note{color:var(--ink-faint);font-size:13px}
+/* ---------- table (desktop) ---------- */
+.tablewrap{
+  overflow-x:auto;border:1px solid var(--line);border-radius:10px;
+  background:var(--panel);box-shadow:var(--shadow);
+}
+table{border-collapse:collapse;width:100%;min-width:1020px}
+thead th{
+  text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--ink-faint);font-weight:600;padding:10px 14px;
+  border-bottom:1px solid var(--line);white-space:nowrap;background:var(--panel);
+}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:color-mix(in srgb,var(--accent-soft) 40%,transparent)}
+td.num{color:var(--ink-faint);font-variant-numeric:tabular-nums;font-size:13px;padding-top:14px}
+.jname{font-weight:600;line-height:1.35}
+.jsite{font-size:12.5px;color:var(--ink-faint);margin-top:1px;word-break:break-all}
+.jfield{
+  display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;
+  color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:1px 7px;margin-top:6px;
+}
+.jnote{font-size:12.5px;color:var(--ink-soft);margin-top:5px;max-width:46ch;line-height:1.45}
+.pub .pname{line-height:1.35}
+.pub .ptype{font-size:12.5px;color:var(--ink-faint);margin-top:1px}
+.cc{
+  display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;
+  background:var(--idx-bg);color:var(--idx-fg);border-radius:5px;padding:1px 6px;
+  margin-left:6px;vertical-align:1px;
+}
+.badges{display:flex;flex-wrap:wrap;gap:5px;max-width:240px}
+.qb{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:600;border-radius:6px;padding:2.5px 8px;
+  white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+.qb .sys{font-weight:500;opacity:.75;font-size:11px}
+.qb.Q1{background:var(--q1-bg);color:var(--q1-fg)}
+.qb.Q2{background:var(--q2-bg);color:var(--q2-fg)}
+.qb.Q3{background:var(--q3-bg);color:var(--q3-fg)}
+.qb.Q4{background:var(--q4-bg);color:var(--q4-fg)}
+.qb.idx{background:var(--idx-bg);color:var(--idx-fg)}
+.fee{font-size:13.5px;line-height:1.4;max-width:22ch}
+.fee .diamond{color:var(--diamond);font-weight:600}
+.fee .verify{color:var(--ink-faint)}
+.speed{font-size:13px;color:var(--ink-soft);line-height:1.4;max-width:18ch}
+.flag{
+  display:inline-flex;align-items:flex-start;gap:5px;font-size:12.5px;color:var(--warn);
+  line-height:1.4;max-width:26ch;
+}
+.dash{opacity:.35}
+.empty{padding:36px 20px;text-align:center;color:var(--ink-faint);font-size:14px}
+.hidden{display:none}
+/* ---------- legend ---------- */
+.legend{
+  margin-top:26px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--ink-faint);font-size:13px;display:flex;flex-wrap:wrap;gap:8px 22px;
+}
+.legend .qb{font-size:11px}
+/* ---------- mobile: table → cards ---------- */
+@media (max-width:860px){
+  .wrap{padding:20px 14px 56px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  select{max-width:none;flex:1 1 46%}
+  .count{margin-left:0;flex-basis:100%}
+  .tablewrap{overflow-x:visible;border:none;background:none;box-shadow:none;border-radius:0}
+  table{min-width:0;display:block}
+  thead{display:none}
+  tbody{display:grid;gap:10px}
+  tbody tr{
+    display:block;background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:14px 14px 12px;box-shadow:var(--shadow);
+  }
+  tbody tr:hover{background:var(--panel)}
+  tbody td{display:block;padding:0;border-bottom:none}
+  td.num{display:none}
+  td.cell-journal{margin-bottom:8px}
+  .jnote{max-width:none}
+  td.cell-pub{margin-bottom:8px;font-size:14px}
+  td.cell-q{margin-bottom:8px}
+  .badges{max-width:none}
+  td.cell-fee,td.cell-speed,td.cell-flag{
+    display:flex;gap:8px;align-items:baseline;
+    padding:5px 0 0;margin-top:5px;border-top:1px solid var(--line-soft);
+  }
+  td.cell-fee::before{content:"Fees";}
+  td.cell-speed::before{content:"Speed";}
+  td.cell-flag::before{content:"Flags";}
+  td.cell-fee::before,td.cell-speed::before,td.cell-flag::before{
+    flex:0 0 52px;font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;
+    color:var(--ink-faint);font-weight:600;padding-top:2px;
+  }
+  td.cell-speed:has(.dash),td.cell-flag:has(.dash){display:none}
+  .fee,.speed,.flag{max-width:none}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="page">
+    <p class="eyebrow">Verified 17 July 2026 · SCImago / Scopus / JCR / DOAJ</p>
+    <h1>Journal Shortlist — Verified Non-Commercial Venues</h1>
+    <p class="sub">Engineering and computing journals from university, academy, society, and government publishers — no purely commercial houses. Two tiers by best current quartile: <strong>Tier 1</strong> reaches Q2 or better in at least one ranking system (SJR, CiteScore, or JCR); <strong>Tier 2</strong> tops out at Q3. Where systems disagree, every badge is shown — check which system your institution counts.</p>
+  </header>
+
+  <div class="stats" id="stats" role="region" aria-label="Summary statistics"></div>
+
+  <div class="toolbar" role="region" aria-label="Filters">
+    <div class="row">
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        <input id="q" type="search" placeholder="Search journals, publishers, countries, notes…" aria-label="Search journals">
+      </div>
+      <select id="fCat" aria-label="Filter by tier">
+        <option value="">All tiers</option>
+        <option value="Q2+">Tier 1 · Q2 or better</option>
+        <option value="Q3">Tier 2 · Q3</option>
+      </select>
+      <select id="fField" aria-label="Filter by field"><option value="">All fields</option></select>
+      <select id="fQuart" aria-label="Filter by best quartile">
+        <option value="">Best quartile: any</option>
+        <option value="Q1">Best = Q1</option>
+        <option value="Q2">Best = Q2</option>
+        <option value="Q3">Best = Q3</option>
+      </select>
+      <select id="fCountry" aria-label="Filter by country"><option value="">All countries</option></select>
+      <select id="fPtype" aria-label="Filter by publisher type"><option value="">All publisher types</option></select>
+    </div>
+    <div class="row">
+      <button class="chip" id="fNoFee" aria-pressed="false">♦ No-fee only</button>
+      <button class="chip" id="fClean" aria-pressed="false">Hide ⚠ flagged</button>
+      <button class="chip" id="fSpeed" aria-pressed="false">Has official speed data</button>
+      <select id="sort" aria-label="Sort order">
+        <option value="sjr">Sort: SJR score ↓</option>
+        <option value="name">Sort: name A–Z</option>
+        <option value="if">Sort: JCR impact factor ↓</option>
+      </select>
+      <button class="reset" id="reset">Reset all</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <section class="tier" id="tier1">
+    <div class="tier-head">
+      <span class="tier-tag t1">Tier 1</span>
+      <h2>Q2 or better</h2>
+      <span class="tier-note" id="n1"></span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>Journal</th><th>Publisher</th><th>Quartiles &amp; metrics</th><th>Fees</th><th>Speed</th><th>Flags</th>
+        </tr></thead>
+        <tbody id="b1"></tbody>
+      </table>
+      <div class="empty hidden" id="e1">No Tier 1 journals match the current filters.</div>
+    </div>
+  </section>
+
+  <section class="tier" id="tier2">
+    <div class="tier-head">
+      <span class="tier-tag t2">Tier 2</span>
+      <h2>Q3 — best current quartile</h2>
+      <span class="tier-note" id="n2"></span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>Journal</th><th>Publisher</th><th>Quartiles &amp; metrics</th><th>Fees</th><th>Speed</th><th>Flags</th>
+        </tr></thead>
+        <tbody id="b2"></tbody>
+      </table>
+      <div class="empty hidden" id="e2">No Tier 2 journals match the current filters.</div>
+    </div>
+  </section>
+
+  <div class="legend">
+    <span><span class="qb Q1">Q1</span> <span class="qb Q2">Q2</span> <span class="qb Q3">Q3</span> <span class="qb Q4">Q4</span> quartile by system (SJR / CS = CiteScore / JCR)</span>
+    <span><span class="qb idx">SCIE</span> <span class="qb idx">ESCI</span> Web of Science index only, no current quartile</span>
+    <span>♦ diamond / no-APC confirmed or reported</span>
+    <span>⚠ integrity or screening flag — apply due diligence</span>
+    <span>† owned by a non-commercial body, distributed by a commercial house (exception rule)</span>
+    <span>Excluded after verification: Facta Universitatis E&amp;E and Mechanika (KTU) — Q4 in all current systems.</span>
+  </div>
+</div>
+
+<script>
+const COUNTRY={RO:"Romania",LT:"Lithuania",BG:"Bulgaria",PL:"Poland",HU:"Hungary",RS:"Serbia",KR:"South Korea",IN:"India",HR:"Croatia",IR:"Iran",GR:"Greece",TR:"Türkiye",ID:"Indonesia",SI:"Slovenia",AT:"Austria",CZ:"Czechia",SK:"Slovakia",JO:"Jordan",LV:"Latvia",IT:"Italy",BR:"Brazil",MX:"Mexico",ZA:"South Africa"};
+const J=[
+{"c":"Q2+","n":"Facta Universitatis, Series: Mechanical Engineering","w":"casopisi.junis.ni.ac.rs/index.php/FUMechEng","p":"University of Niš","pt":"University","co":"RS","f":"Mechanical","sq":"Q1","sv":1.301,"sy":24,"cq":"Q1","jq":"Q1","jf":"11.8","fee":{"t":"nofee","v":"♦ Diamond OA — no APC (DOAJ, CC BY-NC-ND)"},"sp":"~7 wks submission → publication (DOAJ-listed)","warn":"Anomalous metric growth: JIF 13.4 → 11.8 ranks a small 3-issue/yr journal ~3/180 in Mechanical Eng. — citation concentration far above peers. Not on Clarivate's suppression list, but scrutinize.","note":"Broad mechanical scope (mechanics, tribology, mechatronics) since 1994; CiteScore 6.1."},
+{"c":"Q2+","n":"ROMJIST","w":"romjist.ro","p":"Romanian Academy","pt":"Academy","co":"RO","f":"CS & IT","sq":"Q1","sv":1.195,"sy":25,"cq":null,"jq":"Q1","jf":"3.9","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Rise verified as citation-driven: self-cites ~20/yr, stable ~28 papers/yr. Strongest metrics in the table."},
+{"c":"Q2+","n":"Engineering Science and Technology, an Int. J. (JESTECH)","w":"jestech.karabuk.edu.tr","p":"Karabuk University","pt":"University","co":"TR","f":"Multidisciplinary","exc":true,"sq":"Q1","sv":1.093,"sy":24,"cq":"Q1","jq":"Q1","jf":"5.8","fee":{"t":"apc","v":"US$2,000 excl. taxes (Elsevier) — formerly free, subsidy ended"},"sp":null,"warn":"Shifted from no-fee to US$2,000 APC; rapid growth in visibility (CiteScore 11.3) — monitor.","note":"Karabuk University's fully-OA engineering flagship, Q1 across seven Scopus categories. Exception entry: Elsevier-published."},
+{"c":"Q2+","n":"Journal of Civil Engineering and Management","w":"journals.vilniustech.lt","p":"VILNIUS TECH Press","pt":"University","co":"LT","f":"Civil & Transport","sq":"Q1","sv":0.707,"sy":24,"cq":null,"jq":"SCIE","jf":null,"fee":{"t":"apc","v":"~€480 · CC BY"},"sp":null,"warn":null,"note":"Fully university-published since 2018 (left Taylor & Francis). Construction management, IT in construction."},
+{"c":"Q2+","n":"Nuclear Engineering and Technology","w":"via Elsevier (KNS)","p":"Korean Nuclear Society","pt":"Society","co":"KR","f":"Energy & Environment","exc":true,"sq":"Q2","sv":0.692,"sy":24,"cq":null,"jq":"Q2","jf":"2.6–2.9","fee":{"t":"nofee","v":"♦ Society-subsidized — no APC up to 8 pp. (KNS pays); US$200/page beyond"},"sp":"~32 wks avg. submission → publication (Elsevier insights)","warn":null,"note":"Gold-OA international journal across nuclear science and technology. Exception entry: society-owned, Elsevier-distributed."},
+{"c":"Q2+","n":"Informatica","w":"informatica.vu.lt","p":"Vilnius University + Lithuanian Academy of Sciences","pt":"University","co":"LT","f":"CS & IT","sq":"Q2","sv":0.61,"sy":24,"cq":null,"jq":"SCIE","jf":"2.8","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Optimization, recognition, control, automation. Don't confuse with Informatica (Slovenia, Q3)."},
+{"c":"Q2+","n":"Eksploatacja i Niezawodność — Maintenance and Reliability","w":"ein.org.pl","p":"Polish Maintenance Society (PNTTE)","pt":"Society","co":"PL","f":"Industrial & Management","sq":"Q2","sv":0.547,"sy":24,"cq":null,"jq":"Q1","jf":"3.1","fee":{"t":"apc","v":"3,000 PLN (~€750) on acceptance (official APC page)"},"sp":null,"warn":"APC roughly doubled recently (older sources still show ~€410); third-party sites advertise very short turnarounds not confirmed officially.","note":"Applied maintenance, reliability and diagnostics; now a strong SCIE title — JCR Q1 Engineering Multidisciplinary."},
+{"c":"Q2+","n":"JSDEWES — J. of Sustainable Development of Energy, Water and Environment Systems","w":"sdewes.org/jsdewes","p":"SDEWES Centre, Zagreb","pt":"Institute / nonprofit","co":"HR","f":"Energy & Environment","sq":"Q2","sv":0.476,"sy":24,"cq":null,"jq":"ESCI","jf":null,"fee":{"t":"verify","v":"OA (DOAJ) · fees: verify"},"sp":null,"warn":null,"note":"Energy systems, smart infrastructure — strong fit for energy/edge work."},
+{"c":"Q2+","n":"Strojniški vestnik — J. of Mechanical Engineering","w":"sv-jme.eu","p":"Assoc. of Mechanical Engineers and Technicians of Slovenia","pt":"Society","co":"SI","f":"Mechanical","sq":"Q2","sv":0.47,"sy":24,"cq":null,"jq":"SCIE","jf":null,"fee":{"t":"verify","v":"Fully OA (DOAJ) · fees: verify"},"sp":null,"warn":null,"note":"Strongest mechanical venue; publishing since 1955."},
+{"c":"Q2+","n":"Acta Montanistica Slovaca","w":"actamont.tuke.sk","p":"Technical University of Košice (Faculty of Mining, Ecology, Process Control)","pt":"University","co":"SK","f":"Energy & Environment","sq":"Q3","sv":0.456,"sy":24,"cq":"Q2","jq":"Q3","jf":"1.4","fee":{"t":"nofee","v":"♦ Diamond OA — no submission or processing charges (DOAJ + site)"},"sp":null,"warn":null,"note":"Mining, geology, earth resources, geotechnics since 1996. Q2 via CiteScore; 5-yr IF 2.2 vs current 1.4 suggests a citation peak has passed."},
+{"c":"Q2+","n":"Cybernetics and Information Technologies","w":"cit.iit.bas.bg","p":"IICT, Bulgarian Academy of Sciences","pt":"Academy","co":"BG","f":"CS & IT","sq":"Q2","sv":0.456,"sy":25,"cq":null,"jq":"ESCI","jf":null,"fee":{"t":"apc","v":"disputed ~€600 report — verify"},"sp":null,"warn":null,"note":"AI, pattern recognition, signal/image processing, control. In DOAJ."},
+{"c":"Q2+","n":"Transport","w":"journals.vilniustech.lt/index.php/Transport","p":"Vilnius Gediminas Technical University (VILNIUS TECH)","pt":"University","co":"LT","f":"Civil & Transport","sq":"Q2","sv":0.456,"sy":24,"cq":"Q2","jq":"Q4","jf":"1.3","fee":{"t":"apc","v":"€400 + 21% VAT (VAT excluded for EU institutions)"},"sp":null,"warn":null,"note":"Flagship transport-science journal (est. 1986): road/rail/water/air transport, logistics, safety. Q2 via Scopus/SJR; JCR places it Q4."},
+{"c":"Q2+","n":"Journal of Applied and Computational Mechanics","w":"jacm.scu.ac.ir","p":"Shahid Chamran University of Ahvaz","pt":"University","co":"IR","f":"Mechanical","sq":"Q2","sv":0.452,"sy":24,"cq":"Q2","jq":"Q2","jf":"3.4","fee":{"t":"nofee","v":"♦ Diamond OA — no APC (official site + DOAJ)"},"sp":"~8 wks submission → publication (per journal site)","warn":null,"note":"Applied/computational solid and fluid mechanics; CiteScore 4.7, SNIP 1.26 — strongest diamond-OA mechanics venue after FUME."},
+{"c":"Q2+","n":"Information Technology and Control","w":"itc.ktu.lt","p":"Kaunas University of Technology","pt":"University","co":"LT","f":"CS & IT","sq":"Q2","sv":0.447,"sy":25,"cq":null,"jq":"Q3","jf":"1.9","fee":{"t":"verify","v":"OA, CC BY · fees: verify"},"sp":null,"warn":null,"note":"Growth 48→83 papers/yr matched by citations; low self-citation — organic. Q2 via SJR; JCR places it Q3."},
+{"c":"Q2+","n":"International Journal of Renewable Energy Development (IJRED)","w":"ijred.cbiore.id","p":"CBIORE, Diponegoro University","pt":"University","co":"ID","f":"Energy & Environment","sq":"Q3","sv":0.442,"sy":24,"cq":"Q2","jq":"ESCI","jf":null,"fee":{"t":"apc","v":"US$350 on acceptance; no submission fee (CC BY-SA)"},"sp":"~8 wks avg. submission → publication (journal-stated)","warn":"Fast stated turnaround (8 wks to publication) — above the red-flag line but monitor alongside output growth.","note":"SINTA-1-accredited; biomass, solar, wind, renewable policy/technology. Q2 via 2024 CiteScore (2.7); sources split Q2/Q3 for SJR."},
+{"c":"Q2+","n":"Int. J. of Computers Communications & Control (IJCCC)","w":"univagora.ro","p":"Agora University R&D Center","pt":"University","co":"RO","f":"CS & IT","sq":"Q3","sv":0.436,"sy":24,"cq":"Q1","jq":"Q3","jf":null,"fee":{"t":"verify","v":"Gold OA, CC BY-NC · fees: verify"},"sp":null,"warn":null,"note":"No special issues; active fraud-warning notice — integrity-conscious. Q2+ only via CiteScore (Q1 Comp. Theory & Math, Q2 Networks)."},
+{"c":"Q2+","n":"ETRI Journal","w":"via Wiley","p":"ETRI (Korean government research institute)","pt":"Government","co":"KR","f":"Electrical & Electronics","exc":true,"sq":"Q2","sv":0.42,"sy":24,"cq":null,"jq":null,"jf":"2.0","fee":{"t":"nofee","v":"♦ no publication fee (per homepage)"},"sp":"~8 wks submission → publication (reported)","warn":null,"note":"Electronics, telecom, ICT. Exception entry: institute-owned, Wiley-distributed."},
+{"c":"Q2+","n":"Int. J. of Applied Mathematics and Computer Science (AMCS)","w":"amcs.uz.zgora.pl","p":"University of Zielona Góra","pt":"University","co":"PL","f":"CS & IT","sq":"Q2","sv":0.413,"sy":25,"cq":null,"jq":null,"jf":"1.2","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Control theory, AI methods, applied math; ~50 papers/yr, low self-citation."},
+{"c":"Q2+","n":"Periodica Polytechnica Civil Engineering","w":"pp.bme.hu/ci","p":"Budapest University of Technology and Economics (BME)","pt":"University","co":"HU","f":"Civil & Transport","sq":"Q2","sv":0.412,"sy":24,"cq":null,"jq":"Q3","jf":"1.7","fee":{"t":"nofee","v":"♦ Diamond OA — no APC, submission or publication fees (CC BY)"},"sp":null,"warn":null,"note":"Long-running (est. 1957) BME journal; SJR Q2 in Civil & Structural and Engineering (misc.), Q3 Geotechnical."},
+{"c":"Q2+","n":"Journal of Ecological Engineering","w":"jeeng.net","p":"Polish Society of Ecological Engineering (PTIE)","pt":"Society","co":"PL","f":"Energy & Environment","sq":"Q2","sv":0.408,"sy":24,"cq":null,"jq":"ESCI","jf":"1.5","fee":{"t":"apc","v":"€450 (2026 rate), payable after acceptance"},"sp":null,"warn":"High volume (~408 articles in 2024) for a society journal — no delisting history, but monitor volume growth and self-citation.","note":"Ecological engineering, land reclamation, waste management, environmental technology; strong CEE + Asian author base."},
+{"c":"Q2+","n":"Acta Polytechnica Hungarica","w":"acta.uni-obuda.hu","p":"Óbuda University","pt":"University","co":"HU","f":"Multidisciplinary","sq":"Q2","sv":0.406,"sy":24,"cq":null,"jq":null,"jf":"1.8","fee":{"t":"nofee","v":"♦ reported no-APC — verify"},"sp":null,"warn":null,"note":"Broad polytechnic scope: engineering, informatics, applied sciences."},
+{"c":"Q2+","n":"Computer Science and Information Systems (ComSIS)","w":"comsis.org","p":"ComSIS Consortium","pt":"University","co":"RS","f":"CS & IT","sq":"Q2","sv":0.401,"sy":24,"cq":null,"jq":"Q2","jf":"1.8","fee":{"t":"apc","v":"~€400 reported — verify"},"sp":null,"warn":null,"note":"Software engineering, information systems."},
+{"c":"Q2+","n":"Frattura ed Integrità Strutturale / Fracture and Structural Integrity","w":"fracturae.com","p":"Gruppo Italiano Frattura (Italian Group of Fracture, IGF)","pt":"Society","co":"IT","f":"Mechanical","sq":"Q2","sv":0.398,"sy":24,"cq":"Q2","jq":"Q3","jf":"1.5","fee":{"t":"nofee","v":"♦ Diamond OA — no APC since launch (2007), explicit IGF policy"},"sp":null,"warn":null,"note":"Fracture mechanics, fatigue, structural integrity; CiteScore 3.4 (Q2, 55th pct Mechanics of Materials)."},
+{"c":"Q2+","n":"Automatika","w":"via Taylor & Francis","p":"KoREMA (Croatian society, IFAC/IMEKO member)","pt":"Society","co":"HR","f":"Electrical & Electronics","exc":true,"sq":"Q2","sv":0.369,"sy":24,"cq":null,"jq":"SCIE","jf":null,"fee":{"t":"apc","v":"~$850 · Gold OA"},"sp":"~42 d to first decision (publisher-reported)","warn":null,"note":"Control, robotics, signal processing, computer vision. 0% self-citation 2024–25. Exception entry: T&F-distributed."},
+{"c":"Q2+","n":"Turkish J. of Electrical Engineering and Computer Sciences","w":"journals.tubitak.gov.tr/elektrik","p":"TÜBİTAK","pt":"Government","co":"TR","f":"Electrical & Electronics","sq":"Q2","sv":0.36,"sy":24,"cq":null,"jq":"Q3","jf":"1.5","fee":{"t":"nofee","v":"♦ Diamond OA — no APC (TÜBİTAK model)"},"sp":null,"warn":null,"note":"Bimonthly; control, AI, signal processing, networks. Q2 via SJR only — journal's own site honestly lists JCR Q3."},
+{"c":"Q2+","n":"International Journal of Technology (IJTech)","w":"ijtech.eng.ui.ac.id","p":"Faculty of Engineering, Universitas Indonesia","pt":"University","co":"ID","f":"Multidisciplinary","sq":"Q2","sv":0.354,"sy":24,"cq":null,"jq":"ESCI","jf":"1.2","fee":{"t":"apc","v":"~US$1,000 reported — verify"},"sp":"~16 wks (reported)","warn":null,"note":"8 issues/yr, ~170 papers, ~30% rejection rate (official). Sustainable technology focus; univ. announced Q1 Multidisciplinary (SJR Apr 2024 release)."},
+{"c":"Q2+","n":"ETASR — Engineering, Technology & Applied Science Research","w":"etasr.com","p":"Independent (Dr. D. Pylarinos)","pt":"Independent","co":"GR","f":"Multidisciplinary","sq":"Q2","sv":0.35,"sy":25,"cq":null,"jq":null,"jf":null,"fee":{"t":"apc","v":"APC applies — verify"},"sp":"57 d to acceptance (official)","warn":"Very high volume (5,000+ papers, strong growth) — indexed and legitimate, but monitor per screening rules.","note":null},
+{"c":"Q2+","n":"Latin American Journal of Solids and Structures (LAJSS)","w":"lajss.org","p":"Brazilian Society of Mechanical Sciences and Engineering (ABCM)","pt":"Society","co":"BR","f":"Mechanical","sq":"Q2","sv":0.33,"sy":24,"cq":null,"jq":"SCIE","jf":"~1.4–1.5","fee":{"t":"apc","v":"€600 on acceptance; paid fast track €1,200"},"sp":"Paid fast track: publication within 35 d (€1,200)","warn":"Paid ultra-fast track (35 d for €1,200) is an integrity red flag; SCImago lists an individual, not the society, as publisher of record — double-check governance.","note":"SCIE-indexed solids/structures journal on SciELO; Q2 in Aerospace/Automotive/Ocean/Mechanical Eng. (2024)."},
+{"c":"Q2+","n":"Promet — Traffic & Transportation","w":"traffic2.fpz.hr","p":"University of Zagreb, Faculty of Transport and Traffic Sciences","pt":"University","co":"HR","f":"Civil & Transport","sq":"Q2","sv":0.321,"sy":24,"cq":null,"jq":"Q4","jf":"1.1","fee":{"t":"apc","v":"€1,000 + 25% VAT (€1,250 total); explicitly no waivers"},"sp":null,"warn":"High APC for a Q2/Q4 venue with no waiver policy, plus unusual €500 withdrawal fee and €500 'ethical breach penalty fee'.","note":"Traffic engineering, transport planning, logistics, ITS since 1989; SJR 0.321 is its historical peak. Q2 via SJR only."},
+{"c":"Q2+","n":"Sādhanā","w":"via Springer","p":"Indian Academy of Sciences","pt":"Academy","co":"IN","f":"Multidisciplinary","exc":true,"sq":"Q2","sv":0.321,"sy":24,"cq":"Q1","jq":"Q2","jf":"1.6–1.9","fee":{"t":"nofee","v":"♦ no APC reported — verify"},"sp":null,"warn":null,"note":"All engineering branches incl. CS, electronics, energy. Exception entry: Springer-distributed."},
+{"c":"Q2+","n":"Scientia Iranica","w":"scientiairanica.sharif.edu","p":"Sharif University of Technology","pt":"University","co":"IR","f":"Multidisciplinary","sq":"Q3","sv":0.304,"sy":24,"cq":"Q2","jq":"Q2","jf":"1.9","fee":{"t":"verify"},"sp":"14 d first decision · 150 d median final (official)","warn":null,"note":"Broad engineering + CS; official speed transparency. Q2 via JCR and CiteScore; SJR says Q3."},
+{"c":"Q2+","n":"Bulletin of the Polish Academy of Sciences: Technical Sciences","w":"journals.pan.pl/bpasts","p":"Polish Academy of Sciences","pt":"Academy","co":"PL","f":"Multidisciplinary","sq":"Q3","sv":0.271,"sy":24,"cq":"Q2","jq":"SCIE","jf":"1.2–1.3","fee":{"t":"apc","v":"2,000 PLN (~€500) up to 8 pp., +250 PLN/page (official, from Jan 2025)"},"sp":null,"warn":null,"note":"Q2 only via CiteScore (Engineering, 55th pct); broad technical scope incl. AI, networks."},
+{"c":"Q3","n":"GRAĐEVINAR — J. of the Croatian Association of Civil Engineers","w":"casopis-gradjevinar.hr","p":"Croatian Association of Civil Engineers (HSGI)","pt":"Society","co":"HR","f":"Civil & Transport","sq":"Q3","sv":0.366,"sy":24,"cq":null,"jq":"Q4","jf":"0.94","fee":{"t":"nofee","v":"♦ No APC; authors pay only per-page translation/proofreading costs"},"sp":null,"warn":null,"note":"Monthly bilingual (HR/EN) society journal on construction, structures, materials; SJR 0.366 is its historical best. JCR places it Q4."},
+{"c":"Q3","n":"Civil and Environmental Engineering","w":"svf.uniza.sk/cee","p":"University of Žilina, Faculty of Civil Engineering","pt":"University","co":"SK","f":"Civil & Transport","exc":true,"sq":"Q3","sv":0.358,"sy":24,"cq":null,"jq":"Q3","jf":"1.1","fee":{"t":"apc","v":"€738 from Jan 2025 (was €480); no waivers"},"sp":null,"warn":"APC raised ~54% in one year; aggregators advertise ~8-wk submission-to-publication (unconfirmed officially).","note":"Civil engineering, transport structures, environmental engineering. Exception entry: Sciendo (De Gruyter)-distributed."},
+{"c":"Q3","n":"Computing and Informatics","w":"cai.sk","p":"Slovak Academy of Sciences","pt":"Academy","co":"SK","f":"CS & IT","sq":"Q3","sv":0.33,"sy":25,"cq":null,"jq":"Q3","jf":null,"fee":{"t":"verify"},"sp":null,"warn":null,"note":"Self-citation only 5.9% — cleanest integrity profile in Tier 2."},
+{"c":"Q3","n":"IJECE (IAES)","w":"ijece.iaescore.com","p":"Institute of Advanced Engineering and Science","pt":"Independent","co":"ID","f":"Electrical & Electronics","sq":"Q3","sv":0.33,"sy":24,"cq":null,"jq":null,"jf":null,"fee":{"t":"apc","v":"APC applies"},"sp":"1–2 wk first decision (advertised)","warn":"Advertises 1–2 week first decision — close to the review-speed red flag; very high IAES volume. Weakest integrity profile in this table. Claims CiteScore Q2 on its own channels — treat as marketing until checked on Scopus.","note":null},
+{"c":"Q3","n":"International Arab Journal of Information Technology","w":"iajit.org","p":"Zarqa University / Colleges of Computing & Info. Society","pt":"University","co":"JO","f":"CS & IT","sq":"Q3","sv":0.327,"sy":24,"cq":null,"jq":"Q3","jf":"1.3","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Quarterly; CiteScore 4.2."},
+{"c":"Q3","n":"Archives of Environmental Protection","w":"journals.pan.pl/aep","p":"PAS Institute of Environmental Engineering","pt":"Academy","co":"PL","f":"Energy & Environment","sq":"Q3","sv":0.313,"sy":24,"cq":null,"jq":"Q4","jf":"~1.3–1.5","fee":{"t":"apc","v":"~€520 (aggregator-reported — confirm on PAS site)"},"sp":null,"warn":"JCR 2024 places it Q4 in Environmental Sciences (~300/358); qualifies only via SJR Q3 — borderline, recheck at next release.","note":"SCIE-indexed PAS quarterly on air/water/soil pollution control and environmental engineering."},
+{"c":"Q3","n":"Tehnički vjesnik / Technical Gazette","w":"tehnicki-vjesnik.com","p":"Croatian universities consortium (Slavonski Brod / Osijek)","pt":"University","co":"HR","f":"Multidisciplinary","sq":"Q3","sv":0.304,"sy":24,"cq":null,"jq":"SCIE","jf":null,"fee":{"t":"apc","v":"publication fee applies (official)"},"sp":null,"warn":"High volume (~241 papers/yr) and 20% self-citation (2023–24) — indexed but apply your screening.","note":"Bimonthly, multidisciplinary engineering."},
+{"c":"Q3","n":"Metrology and Measurement Systems","w":"wydawnictwo.pan.pl/mms","p":"PAS Committee on Metrology","pt":"Academy","co":"PL","f":"Electrical & Electronics","sq":"Q3","sv":0.302,"sy":24,"cq":null,"jq":"SCIE","jf":"1.1","fee":{"t":"nofee","v":"♦ Diamond OA — no fees (official)"},"sp":"6-month avg. publication cycle (official)","warn":null,"note":"Sensors, measurement systems, signal processing, embedded — good fit for instrumentation-adjacent work."},
+{"c":"Q3","n":"Journal of Thermal Engineering","w":"jten.yildiz.edu.tr","p":"Yildiz Technical University, Istanbul","pt":"University","co":"TR","f":"Energy & Environment","sq":"Q3","sv":0.3,"sy":24,"cq":null,"jq":"ESCI","jf":null,"fee":{"t":"nofee","v":"♦ Diamond OA — no APC (university-funded)"},"sp":"~10 wks avg. submission → publication (journal/DOAJ-reported)","warn":null,"note":"Heat transfer, HVAC, combustion, applied thermal systems; Scopus + ESCI since 2015. CiteScore ~2.0 (low-mid Q3)."},
+{"c":"Q3","n":"Archives of Control Sciences","w":"journals.pan.pl","p":"PAS Committee of Automatic Control and Robotics","pt":"Academy","co":"PL","f":"Electrical & Electronics","sq":"Q3","sv":0.29,"svTxt":"0.28–0.30","sy":24,"cq":null,"jq":"SCIE","jf":"1.2–1.3","fee":{"t":"nofee","v":"♦ no APC (DOAJ)"},"sp":null,"warn":null,"note":"Control theory, optimization, decision support, robotics."},
+{"c":"Q3","n":"Archives of Civil Engineering","w":"journals.pan.pl/ace","p":"PAS Committee for Civil and Water Engineering (with Warsaw UT)","pt":"Academy","co":"PL","f":"Civil & Transport","sq":"Q3","sv":0.287,"sy":24,"cq":null,"jq":"ESCI","jf":"1.0","fee":{"t":"apc","v":"2,780 PLN (~€605) publication fee"},"sp":null,"warn":null,"note":"Structural, geotechnical, materials and construction-management research; CiteScore 1.7. Large issues (up to ~40 papers)."},
+{"c":"Q3","n":"Journal of Applied Engineering Science","w":"engineeringscience.rs","p":"Institute for Research and Design in Industry","pt":"Institute / nonprofit","co":"RS","f":"Energy & Environment","sq":"Q3","sv":0.277,"sy":24,"cq":null,"jq":null,"jf":null,"fee":{"t":"verify"},"sp":null,"warn":null,"note":"Energy efficiency and renewables focus; Serbian ministry-ranked M24."},
+{"c":"Q3","n":"The Baltic Journal of Road and Bridge Engineering","w":"bjrbe-journals.rtu.lv/bjrbe","p":"Riga Technical University (with VILNIUS TECH, TalTech, Baltic Road Association)","pt":"University","co":"LV","f":"Civil & Transport","sq":"Q3","sv":0.267,"sy":24,"cq":null,"jq":"SCIE","jf":"1.1","fee":{"t":"apc","v":"€800 from Dec 2025 (€600 from Dec 2024); formerly free"},"sp":null,"warn":"Rapid fee escalation: sponsor-funded no-fee OA → €600 → €800 within a year; legacy pages still advertise 'free of charges'.","note":"Joint Baltic quarterly on road and bridge engineering — pavements, structures, materials, asset management. CiteScore 1.6."},
+{"c":"Q3","n":"Management and Production Engineering Review","w":"journals.pan.pl/mper","p":"PAS Committee on Production Engineering + Polish Association for Production Management","pt":"Academy","co":"PL","f":"Industrial & Management","sq":"Q3","sv":0.264,"sy":24,"cq":null,"jq":"ESCI","jf":"1.3","fee":{"t":"apc","v":"€200 + VAT for 10 pp., +€20/extra page (max 18); no submission charge"},"sp":null,"warn":null,"note":"Production engineering, operations, industrial management; all five Scopus categories Q3 (2024)."},
+{"c":"Q3","n":"Archive of Mechanical Engineering","w":"journals.pan.pl/ame","p":"PAS Committee on Machine Design","pt":"Academy","co":"PL","f":"Mechanical","sq":"Q3","sv":0.258,"sy":24,"cq":null,"jq":"ESCI","jf":"1.1","fee":{"t":"nofee","v":"♦ Diamond OA — no APC or submission charges (CC BY)"},"sp":null,"warn":null,"note":"PAS quarterly on most branches of mechanical engineering (est. 1954); now self-published on journals.pan.pl (left De Gruyter). CiteScore 2.0."},
+{"c":"Q3","n":"Elektronika ir Elektrotechnika","w":"eejournal.ktu.lt","p":"Kaunas University of Technology","pt":"University","co":"LT","f":"Electrical & Electronics","sq":"Q3","sv":0.258,"sy":24,"cq":null,"jq":"Q3","jf":null,"fee":{"t":"apc","v":"~€70 reported · DOAJ Seal"},"sp":"~25 wks (reported)","warn":null,"note":"Cheapest APC among verified Scopus/SCIE EEE venues."},
+{"c":"Q3","n":"Archives of Thermodynamics","w":"journals.pan.pl/ather","p":"PAS Committee on Thermodynamics and Combustion + IMP PAN","pt":"Academy","co":"PL","f":"Energy & Environment","sq":"Q3","sv":0.25,"sy":24,"cq":null,"jq":"ESCI","jf":"1.2","fee":{"t":"nofee","v":"♦ Diamond OA — no APC (PAS/IMP-funded, CC BY-NC-ND)"},"sp":null,"warn":"Quartile has oscillated Q3/Q4 (SJR dipped 2021) — recheck at 2025 SJR release.","note":"Classical and applied thermodynamics, heat transfer, power cycles; ESCI since 2015, JIF since 2022."},
+{"c":"Q3","n":"IJECES — Int. J. of Electrical and Computer Engineering Systems","w":"ijeces.ferit.hr","p":"J.J. Strossmayer Univ. of Osijek (FERIT)","pt":"University","co":"HR","f":"Electrical & Electronics","sq":"Q3","sv":0.248,"sy":24,"cq":null,"jq":"ESCI","jf":null,"fee":{"t":"verify"},"sp":null,"warn":null,"note":"Young venue (Scopus 2016+), H-index 12."},
+{"c":"Q3","n":"Baltic Journal of Modern Computing","w":"bjmc.lu.lv","p":"University of Latvia, Inst. of Mathematics and Informatics","pt":"University","co":"LV","f":"CS & IT","sq":"Q3","sv":0.245,"svTxt":"~0.24–0.25","sy":24,"cq":null,"jq":"Q4","jf":"0.3","fee":{"t":"verify","v":"Gold OA · fees: verify"},"sp":"Immediate online publication of accepted papers (official)","warn":null,"note":"Q3 by SJR only; small venue (H-index 9), Baltic-scope."},
+{"c":"Q3","n":"Advances in Electrical and Computer Engineering","w":"aece.ro","p":"Ștefan cel Mare Univ. of Suceava","pt":"University","co":"RO","f":"Electrical & Electronics","sq":"Q3","sv":0.238,"sy":24,"cq":null,"jq":"SCIE","jf":"0.7","fee":{"t":"apc","v":"~€300 reported"},"sp":"~20 wks (reported)","warn":null,"note":"3 issues/yr since 2025 (shrinking, not inflating)."},
+{"c":"Q3","n":"Journal of Information Processing Systems (JIPS)","w":"jips-k.org","p":"Korea Information Processing Society","pt":"Society","co":"KR","f":"CS & IT","sq":"Q3","sv":0.231,"sy":24,"cq":null,"jq":"ESCI","jf":"0.5","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Applied information processing, networks."},
+{"c":"Q3","n":"Journal of ICT Research and Applications","w":"journals.itb.ac.id","p":"Institut Teknologi Bandung","pt":"University","co":"ID","f":"CS & IT","sq":"Q3","sv":0.221,"sy":24,"cq":null,"jq":"Q4","jf":"0.6","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Q3 by SJR only; JCR places it Q4 — borderline entry."},
+{"c":"Q3","n":"Int. J. of Electronics and Telecommunications","w":"ijet.pl","p":"PAS Committee of Electronics and Telecommunications","pt":"Academy","co":"PL","f":"Electrical & Electronics","sq":"Q3","sv":0.217,"sy":24,"cq":null,"jq":"ESCI","jf":null,"fee":{"t":"apc","v":"500 PLN (~€115) reported"},"sp":"~12 wks submission → publication (reported)","warn":null,"note":"Cheapest of the PAS set."},
+{"c":"Q3","n":"Radioengineering","w":"radioeng.cz","p":"Brno UT / Czech technical universities","pt":"University","co":"CZ","f":"Electrical & Electronics","sq":"Q3","sv":0.216,"sy":24,"cq":null,"jq":"SCIE","jf":"0.88","fee":{"t":"verify","v":"OA (DOAJ) · fees: verify"},"sp":"First review round within 2 months (official)","warn":null,"note":"RF, wireless, signal processing."},
+{"c":"Q3","n":"Journal of Applied Research and Technology (JART)","w":"jart.icat.unam.mx","p":"ICAT, Universidad Nacional Autónoma de México (UNAM)","pt":"University","co":"MX","f":"Multidisciplinary","sq":"Q3","sv":0.215,"sy":24,"cq":null,"jq":null,"jf":null,"fee":{"t":"nofee","v":"♦ Diamond OA — no submission, processing or colour charges (UNAM-funded)"},"sp":null,"warn":"Legacy Elsevier pages mark it 'discontinued' — that refers only to ended Elsevier distribution (~2017); the journal is active (Vol. 24, 2026). No current JCR IF found — verify WoS status if it matters.","note":"Bimonthly UNAM engineering/applied-technology journal in English; Scopus Q3 Engineering (misc.)."},
+{"c":"Q3","n":"South African Journal of Industrial Engineering","w":"sajie.journals.ac.za","p":"Southern African Institute for Industrial Engineering (SAIIE)","pt":"Society","co":"ZA","f":"Industrial & Management","sq":"Q3","sv":0.2,"sy":24,"cq":null,"jq":"Q4","jf":"0.5","fee":{"t":"apc","v":"Submission ZAR 1,600 (~$230) + publication ZAR 4,100 (~$440); ZAR 500/page over 15 pp."},"sp":null,"warn":"Borderline: JCR Q4 (IF 0.5), CiteScore 1.2 — qualifies only via SJR Q3 (Industrial & Manufacturing Eng.).","note":"Accredited SAIIE society journal; industrial engineering research with Southern African focus."},
+{"c":"Q3","n":"Journal of Universal Computer Science (J.UCS)","w":"lib.jucs.org","p":"J.UCS Consortium (TU Graz-led)","pt":"Institute / nonprofit","co":"AT","f":"CS & IT","sq":"Q3","sv":null,"sy":24,"cq":null,"jq":null,"jf":"1.0","fee":{"t":"nofee","v":"♦ Diamond OA — no APC"},"sp":null,"warn":null,"note":"Best no-cost CS option; est. 1994, monthly."},
+{"c":"Q3","n":"Opto-Electronics Review","w":"journals.pan.pl/opelre","p":"Polish Academy of Sciences + SEP","pt":"Academy","co":"PL","f":"Electrical & Electronics","sq":"Q3","sv":null,"sy":24,"cq":null,"jq":"SCIE","jf":"~1.0","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Optical sensors, image processing, photonics; CiteScore 5.0, SNIP 0.97."}
+];
+const RANK={Q1:1,Q2:2,Q3:3,Q4:4};
+J.forEach((j,i)=>{
+  j.i=i+1;
+  const qs=[j.sq,j.cq,j.jq].filter(q=>RANK[q]);
+  j.best=qs.length?qs.sort((a,b)=>RANK[a]-RANK[b])[0]:null;
+  j.noFee=j.fee.t==="nofee";
+  j.ifNum=j.jf?parseFloat(j.jf):null;
+  j.hay=[j.n,j.w,j.p,j.pt,j.f,j.co,COUNTRY[j.co]||"",j.fee.v||"",j.sp||"",j.warn||"",j.note||"",j.sq||"",j.jq||"",j.cq||""].join(" ").toLowerCase();
+});
+const $=id=>document.getElementById(id);
+
+const countries=[...new Set(J.map(j=>j.co))].sort((a,b)=>(COUNTRY[a]||a).localeCompare(COUNTRY[b]||b));
+const ptypes=[...new Set(J.map(j=>j.pt))].sort();
+const fields=[...new Set(J.map(j=>j.f))].sort();
+countries.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=(COUNTRY[c]||c)+" ("+c+")";$("fCountry").appendChild(o);});
+ptypes.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;$("fPtype").appendChild(o);});
+fields.forEach(f=>{const o=document.createElement("option");o.value=f;o.textContent=f;$("fField").appendChild(o);});
+
+const state={q:"",cat:"",field:"",quart:"",country:"",ptype:"",noFee:false,clean:false,speed:false,sort:"sjr"};
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function feeCell(j){
+  const f=j.fee;
+  if(f.t==="nofee")return '<span class="diamond">'+esc(f.v||"♦ no fee")+'</span>';
+  if(f.t==="apc")return esc(f.v);
+  return '<span class="verify">'+esc(f.v||"fees: verify on site")+'</span>';
+}
+function badge(sys,q,extra){
+  return '<span class="qb '+(RANK[q]?q:"idx")+'"><span class="sys">'+sys+'</span>'+esc(q)+(extra?' '+extra:'')+'</span>';
+}
+function badges(j){
+  let h="";
+  if(j.sq)h+=badge("SJR",j.sq,j.sv!=null?esc(j.svTxt||j.sv.toFixed(3))+" ’"+j.sy:"’"+j.sy);
+  if(j.cq)h+=badge("CS",j.cq,"");
+  if(j.jq)h+=badge("JCR",j.jq,j.jf?"IF "+esc(j.jf):"");
+  else if(j.jf)h+='<span class="qb idx"><span class="sys">JCR</span>IF '+esc(j.jf)+'</span>';
+  return '<div class="badges">'+h+'</div>';
+}
+function row(j){
+  return '<tr><td class="num">'+j.i+'</td>'+
+  '<td class="cell-journal"><div class="jname">'+esc(j.n)+(j.exc?' †':'')+'</div><div class="jsite">'+esc(j.w)+'</div><span class="jfield">'+esc(j.f)+'</span>'+(j.note?'<div class="jnote">'+esc(j.note)+'</div>':'')+'</td>'+
+  '<td class="pub cell-pub"><div class="pname">'+esc(j.p)+'<span class="cc">'+j.co+'</span></div><div class="ptype">'+esc(j.pt)+'</div></td>'+
+  '<td class="cell-q">'+badges(j)+'</td>'+
+  '<td class="fee cell-fee">'+feeCell(j)+'</td>'+
+  '<td class="speed cell-speed">'+(j.sp?esc(j.sp):'<span class="dash">—</span>')+'</td>'+
+  '<td class="cell-flag">'+(j.warn?'<span class="flag">⚠ '+esc(j.warn)+'</span>':'<span class="dash">—</span>')+'</td></tr>';
+}
+function pass(j){
+  if(state.cat&&j.c!==state.cat)return false;
+  if(state.field&&j.f!==state.field)return false;
+  if(state.quart&&j.best!==state.quart)return false;
+  if(state.country&&j.co!==state.country)return false;
+  if(state.ptype&&j.pt!==state.ptype)return false;
+  if(state.noFee&&!j.noFee)return false;
+  if(state.clean&&j.warn)return false;
+  if(state.speed&&!j.sp)return false;
+  if(state.q){
+    for(const term of state.q.split(/\s+/).filter(Boolean)){
+      if(!j.hay.includes(term))return false;
+    }
+  }
+  return true;
+}
+function cmp(a,b){
+  if(state.sort==="name")return a.n.localeCompare(b.n);
+  if(state.sort==="if")return (b.ifNum??-1)-(a.ifNum??-1)||a.n.localeCompare(b.n);
+  return (b.sv??-1)-(a.sv??-1)||a.n.localeCompare(b.n);
+}
+function render(){
+  const vis=J.filter(pass).sort(cmp);
+  const t1=vis.filter(j=>j.c==="Q2+"),t2=vis.filter(j=>j.c==="Q3");
+  const T1=J.filter(j=>j.c==="Q2+").length,T2=J.length-T1;
+  $("b1").innerHTML=t1.map(row).join("");
+  $("b2").innerHTML=t2.map(row).join("");
+  $("e1").classList.toggle("hidden",t1.length>0);
+  $("e2").classList.toggle("hidden",t2.length>0);
+  $("tier1").classList.toggle("hidden",state.cat==="Q3");
+  $("tier2").classList.toggle("hidden",state.cat==="Q2+");
+  $("n1").textContent=t1.length+" of "+T1+" shown";
+  $("n2").textContent=t2.length+" of "+T2+" shown";
+  $("count").innerHTML="<strong>"+vis.length+"</strong> of "+J.length+" journals";
+}
+function stats(){
+  const noFee=J.filter(j=>j.noFee).length;
+  const flagged=J.filter(j=>j.warn).length;
+  $("stats").innerHTML=
+    '<div class="stat"><div class="v">'+J.length+'</div><div class="l">Journals</div></div>'+
+    '<div class="stat"><div class="v">'+J.filter(j=>j.c==="Q2+").length+'</div><div class="l">Tier 1 · Q2+</div></div>'+
+    '<div class="stat diamond"><div class="v">'+noFee+'</div><div class="l">♦ No-fee routes</div></div>'+
+    '<div class="stat"><div class="v">'+countries.length+'</div><div class="l">Countries</div></div>'+
+    '<div class="stat flagged"><div class="v">'+flagged+'</div><div class="l">⚠ Flagged</div></div>';
+}
+$("q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render();});
+$("fCat").addEventListener("change",e=>{state.cat=e.target.value;render();});
+$("fField").addEventListener("change",e=>{state.field=e.target.value;render();});
+$("fQuart").addEventListener("change",e=>{state.quart=e.target.value;render();});
+$("fCountry").addEventListener("change",e=>{state.country=e.target.value;render();});
+$("fPtype").addEventListener("change",e=>{state.ptype=e.target.value;render();});
+$("sort").addEventListener("change",e=>{state.sort=e.target.value;render();});
+[["fNoFee","noFee"],["fClean","clean"],["fSpeed","speed"]].forEach(([id,key])=>{
+  $(id).addEventListener("click",()=>{
+    state[key]=!state[key];
+    $(id).setAttribute("aria-pressed",state[key]);
+    render();
+  });
+});
+$("reset").addEventListener("click",()=>{
+  state.q=state.cat=state.field=state.quart=state.country=state.ptype="";
+  state.noFee=state.clean=state.speed=false;state.sort="sjr";
+  $("q").value="";["fCat","fField","fQuart","fCountry","fPtype"].forEach(id=>$(id).value="");
+  $("sort").value="sjr";
+  ["fNoFee","fClean","fSpeed"].forEach(id=>$(id).setAttribute("aria-pressed","false"));
+  render();
+});
+stats();render();
+</script>
