@@ -167,7 +167,10 @@ tbody tr:last-child td{border-bottom:none}
 tbody tr:hover{background:color-mix(in srgb,var(--accent-soft) 40%,transparent)}
 td.num{color:var(--ink-faint);font-variant-numeric:tabular-nums;font-size:13px;padding-top:14px}
 .jname{font-weight:600;line-height:1.35}
-.jsite{font-size:12.5px;color:var(--ink-faint);margin-top:1px;word-break:break-all}
+.jsite{font-size:12.5px;margin-top:1px;word-break:break-all}
+.jsite a{color:var(--accent);text-decoration:none}
+.jsite a:hover{text-decoration:underline;text-underline-offset:2px}
+.jsite a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
 .jfield{
   display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;
   color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:1px 7px;margin-top:6px;
@@ -295,6 +298,9 @@ td.num{color:var(--ink-faint);font-variant-numeric:tabular-nums;font-size:13px;p
 .mtop{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
 .mname{font-weight:650;font-size:16px;line-height:1.35}
 .msite{font-size:12.5px;color:var(--ink-faint)}
+.msite a{color:var(--accent);text-decoration:none}
+.msite a:hover{text-decoration:underline;text-underline-offset:2px}
+.msite a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
 .mmeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;align-items:center}
 .mmeta .tier-tag{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2.5px 9px;border-radius:999px}
 .mfee{font-size:13px;margin-top:7px}
@@ -350,9 +356,9 @@ td.num{color:var(--ink-faint);font-variant-numeric:tabular-nums;font-size:13px;p
     </div>
     <div class="form-foot">
       <button type="submit" class="go">Find matching journals</button>
-      <button type="button" class="filebtn" id="fileBtn">Load from file (.txt, .md)</button>
-      <input type="file" id="file" accept=".txt,.md,.text,.markdown,text/plain" class="hidden">
-      <span class="filehint" id="fileHint">PDF/Word? Copy the text and paste it above.</span>
+      <button type="button" class="filebtn" id="fileBtn">Load from file (.pdf, .doc, .docx, .txt, .md)</button>
+      <input type="file" id="file" accept=".pdf,.doc,.docx,.txt,.md,.text,.markdown,text/plain,application/pdf" class="hidden">
+      <span class="filehint" id="fileHint">PDF/Word extraction is best-effort — if the result looks wrong, paste the text instead.</span>
       <span class="opts">
         <button class="chip" type="button" id="oNoFee" aria-pressed="false">♦ No-fee only</button>
         <button class="chip" type="button" id="oClean" aria-pressed="false">Hide ⚠ flagged</button>
@@ -380,7 +386,7 @@ const J=[
 {"c":"Q2+","n":"ROMJIST","w":"romjist.ro","p":"Romanian Academy","pt":"Academy","co":"RO","f":"CS & IT","sq":"Q1","sv":1.195,"sy":25,"cq":null,"jq":"Q1","jf":"3.9","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Rise verified as citation-driven: self-cites ~20/yr, stable ~28 papers/yr. Strongest metrics in the table."},
 {"c":"Q2+","n":"Engineering Science and Technology, an Int. J. (JESTECH)","w":"jestech.karabuk.edu.tr","p":"Karabuk University","pt":"University","co":"TR","f":"Multidisciplinary","exc":true,"sq":"Q1","sv":1.093,"sy":24,"cq":"Q1","jq":"Q1","jf":"5.8","fee":{"t":"apc","v":"US$2,000 excl. taxes (Elsevier) — formerly free, subsidy ended"},"sp":null,"warn":"Shifted from no-fee to US$2,000 APC; rapid growth in visibility (CiteScore 11.3) — monitor.","note":"Karabuk University's fully-OA engineering flagship, Q1 across seven Scopus categories. Exception entry: Elsevier-published."},
 {"c":"Q2+","n":"Journal of Civil Engineering and Management","w":"journals.vilniustech.lt","p":"VILNIUS TECH Press","pt":"University","co":"LT","f":"Civil & Transport","sq":"Q1","sv":0.707,"sy":24,"cq":null,"jq":"SCIE","jf":null,"fee":{"t":"apc","v":"~€480 · CC BY"},"sp":null,"warn":null,"note":"Fully university-published since 2018 (left Taylor & Francis). Construction management, IT in construction."},
-{"c":"Q2+","n":"Nuclear Engineering and Technology","w":"via Elsevier (KNS)","p":"Korean Nuclear Society","pt":"Society","co":"KR","f":"Energy & Environment","exc":true,"sq":"Q2","sv":0.692,"sy":24,"cq":null,"jq":"Q2","jf":"2.6–2.9","fee":{"t":"nofee","v":"♦ Society-subsidized — no APC up to 8 pp. (KNS pays); US$200/page beyond"},"sp":"~32 wks avg. submission → publication (Elsevier insights)","warn":null,"note":"Gold-OA international journal across nuclear science and technology. Exception entry: society-owned, Elsevier-distributed."},
+{"c":"Q2+","n":"Nuclear Engineering and Technology","w":"via Elsevier (KNS)","u":"sciencedirect.com/journal/nuclear-engineering-and-technology","p":"Korean Nuclear Society","pt":"Society","co":"KR","f":"Energy & Environment","exc":true,"sq":"Q2","sv":0.692,"sy":24,"cq":null,"jq":"Q2","jf":"2.6–2.9","fee":{"t":"nofee","v":"♦ Society-subsidized — no APC up to 8 pp. (KNS pays); US$200/page beyond"},"sp":"~32 wks avg. submission → publication (Elsevier insights)","warn":null,"note":"Gold-OA international journal across nuclear science and technology. Exception entry: society-owned, Elsevier-distributed."},
 {"c":"Q2+","n":"Informatica","w":"informatica.vu.lt","p":"Vilnius University + Lithuanian Academy of Sciences","pt":"University","co":"LT","f":"CS & IT","sq":"Q2","sv":0.61,"sy":24,"cq":null,"jq":"SCIE","jf":"2.8","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Optimization, recognition, control, automation. Don't confuse with Informatica (Slovenia, Q3)."},
 {"c":"Q2+","n":"Eksploatacja i Niezawodność — Maintenance and Reliability","w":"ein.org.pl","p":"Polish Maintenance Society (PNTTE)","pt":"Society","co":"PL","f":"Industrial & Management","sq":"Q2","sv":0.547,"sy":24,"cq":null,"jq":"Q1","jf":"3.1","fee":{"t":"apc","v":"3,000 PLN (~€750) on acceptance (official APC page)"},"sp":null,"warn":"APC roughly doubled recently (older sources still show ~€410); third-party sites advertise very short turnarounds not confirmed officially.","note":"Applied maintenance, reliability and diagnostics; now a strong SCIE title — JCR Q1 Engineering Multidisciplinary."},
 {"c":"Q2+","n":"JSDEWES — J. of Sustainable Development of Energy, Water and Environment Systems","w":"sdewes.org/jsdewes","p":"SDEWES Centre, Zagreb","pt":"Institute / nonprofit","co":"HR","f":"Energy & Environment","sq":"Q2","sv":0.476,"sy":24,"cq":null,"jq":"ESCI","jf":null,"fee":{"t":"verify","v":"OA (DOAJ) · fees: verify"},"sp":null,"warn":null,"note":"Energy systems, smart infrastructure — strong fit for energy/edge work."},
@@ -392,20 +398,20 @@ const J=[
 {"c":"Q2+","n":"Information Technology and Control","w":"itc.ktu.lt","p":"Kaunas University of Technology","pt":"University","co":"LT","f":"CS & IT","sq":"Q2","sv":0.447,"sy":25,"cq":null,"jq":"Q3","jf":"1.9","fee":{"t":"verify","v":"OA, CC BY · fees: verify"},"sp":null,"warn":null,"note":"Growth 48→83 papers/yr matched by citations; low self-citation — organic. Q2 via SJR; JCR places it Q3."},
 {"c":"Q2+","n":"International Journal of Renewable Energy Development (IJRED)","w":"ijred.cbiore.id","p":"CBIORE, Diponegoro University","pt":"University","co":"ID","f":"Energy & Environment","sq":"Q3","sv":0.442,"sy":24,"cq":"Q2","jq":"ESCI","jf":null,"fee":{"t":"apc","v":"US$350 on acceptance; no submission fee (CC BY-SA)"},"sp":"~8 wks avg. submission → publication (journal-stated)","warn":"Fast stated turnaround (8 wks to publication) — above the red-flag line but monitor alongside output growth.","note":"SINTA-1-accredited; biomass, solar, wind, renewable policy/technology. Q2 via 2024 CiteScore (2.7); sources split Q2/Q3 for SJR."},
 {"c":"Q2+","n":"Int. J. of Computers Communications & Control (IJCCC)","w":"univagora.ro","p":"Agora University R&D Center","pt":"University","co":"RO","f":"CS & IT","sq":"Q3","sv":0.436,"sy":24,"cq":"Q1","jq":"Q3","jf":null,"fee":{"t":"verify","v":"Gold OA, CC BY-NC · fees: verify"},"sp":null,"warn":null,"note":"No special issues; active fraud-warning notice — integrity-conscious. Q2+ only via CiteScore (Q1 Comp. Theory & Math, Q2 Networks)."},
-{"c":"Q2+","n":"ETRI Journal","w":"via Wiley","p":"ETRI (Korean government research institute)","pt":"Government","co":"KR","f":"Electrical & Electronics","exc":true,"sq":"Q2","sv":0.42,"sy":24,"cq":null,"jq":null,"jf":"2.0","fee":{"t":"nofee","v":"♦ no publication fee (per homepage)"},"sp":"~8 wks submission → publication (reported)","warn":null,"note":"Electronics, telecom, ICT. Exception entry: institute-owned, Wiley-distributed."},
+{"c":"Q2+","n":"ETRI Journal","w":"via Wiley","u":"onlinelibrary.wiley.com/journal/22337326","p":"ETRI (Korean government research institute)","pt":"Government","co":"KR","f":"Electrical & Electronics","exc":true,"sq":"Q2","sv":0.42,"sy":24,"cq":null,"jq":null,"jf":"2.0","fee":{"t":"nofee","v":"♦ no publication fee (per homepage)"},"sp":"~8 wks submission → publication (reported)","warn":null,"note":"Electronics, telecom, ICT. Exception entry: institute-owned, Wiley-distributed."},
 {"c":"Q2+","n":"Int. J. of Applied Mathematics and Computer Science (AMCS)","w":"amcs.uz.zgora.pl","p":"University of Zielona Góra","pt":"University","co":"PL","f":"CS & IT","sq":"Q2","sv":0.413,"sy":25,"cq":null,"jq":null,"jf":"1.2","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Control theory, AI methods, applied math; ~50 papers/yr, low self-citation."},
 {"c":"Q2+","n":"Periodica Polytechnica Civil Engineering","w":"pp.bme.hu/ci","p":"Budapest University of Technology and Economics (BME)","pt":"University","co":"HU","f":"Civil & Transport","sq":"Q2","sv":0.412,"sy":24,"cq":null,"jq":"Q3","jf":"1.7","fee":{"t":"nofee","v":"♦ Diamond OA — no APC, submission or publication fees (CC BY)"},"sp":null,"warn":null,"note":"Long-running (est. 1957) BME journal; SJR Q2 in Civil & Structural and Engineering (misc.), Q3 Geotechnical."},
 {"c":"Q2+","n":"Journal of Ecological Engineering","w":"jeeng.net","p":"Polish Society of Ecological Engineering (PTIE)","pt":"Society","co":"PL","f":"Energy & Environment","sq":"Q2","sv":0.408,"sy":24,"cq":null,"jq":"ESCI","jf":"1.5","fee":{"t":"apc","v":"€450 (2026 rate), payable after acceptance"},"sp":null,"warn":"High volume (~408 articles in 2024) for a society journal — no delisting history, but monitor volume growth and self-citation.","note":"Ecological engineering, land reclamation, waste management, environmental technology; strong CEE + Asian author base."},
 {"c":"Q2+","n":"Acta Polytechnica Hungarica","w":"acta.uni-obuda.hu","p":"Óbuda University","pt":"University","co":"HU","f":"Multidisciplinary","sq":"Q2","sv":0.406,"sy":24,"cq":null,"jq":null,"jf":"1.8","fee":{"t":"nofee","v":"♦ reported no-APC — verify"},"sp":null,"warn":null,"note":"Broad polytechnic scope: engineering, informatics, applied sciences."},
 {"c":"Q2+","n":"Computer Science and Information Systems (ComSIS)","w":"comsis.org","p":"ComSIS Consortium","pt":"University","co":"RS","f":"CS & IT","sq":"Q2","sv":0.401,"sy":24,"cq":null,"jq":"Q2","jf":"1.8","fee":{"t":"apc","v":"~€400 reported — verify"},"sp":null,"warn":null,"note":"Software engineering, information systems."},
 {"c":"Q2+","n":"Frattura ed Integrità Strutturale / Fracture and Structural Integrity","w":"fracturae.com","p":"Gruppo Italiano Frattura (Italian Group of Fracture, IGF)","pt":"Society","co":"IT","f":"Mechanical","sq":"Q2","sv":0.398,"sy":24,"cq":"Q2","jq":"Q3","jf":"1.5","fee":{"t":"nofee","v":"♦ Diamond OA — no APC since launch (2007), explicit IGF policy"},"sp":null,"warn":null,"note":"Fracture mechanics, fatigue, structural integrity; CiteScore 3.4 (Q2, 55th pct Mechanics of Materials)."},
-{"c":"Q2+","n":"Automatika","w":"via Taylor & Francis","p":"KoREMA (Croatian society, IFAC/IMEKO member)","pt":"Society","co":"HR","f":"Electrical & Electronics","exc":true,"sq":"Q2","sv":0.369,"sy":24,"cq":null,"jq":"SCIE","jf":null,"fee":{"t":"apc","v":"~$850 · Gold OA"},"sp":"~42 d to first decision (publisher-reported)","warn":null,"note":"Control, robotics, signal processing, computer vision. 0% self-citation 2024–25. Exception entry: T&F-distributed."},
+{"c":"Q2+","n":"Automatika","w":"via Taylor & Francis","u":"tandfonline.com/journals/taut20","p":"KoREMA (Croatian society, IFAC/IMEKO member)","pt":"Society","co":"HR","f":"Electrical & Electronics","exc":true,"sq":"Q2","sv":0.369,"sy":24,"cq":null,"jq":"SCIE","jf":null,"fee":{"t":"apc","v":"~$850 · Gold OA"},"sp":"~42 d to first decision (publisher-reported)","warn":null,"note":"Control, robotics, signal processing, computer vision. 0% self-citation 2024–25. Exception entry: T&F-distributed."},
 {"c":"Q2+","n":"Turkish J. of Electrical Engineering and Computer Sciences","w":"journals.tubitak.gov.tr/elektrik","p":"TÜBİTAK","pt":"Government","co":"TR","f":"Electrical & Electronics","sq":"Q2","sv":0.36,"sy":24,"cq":null,"jq":"Q3","jf":"1.5","fee":{"t":"nofee","v":"♦ Diamond OA — no APC (TÜBİTAK model)"},"sp":null,"warn":null,"note":"Bimonthly; control, AI, signal processing, networks. Q2 via SJR only — journal's own site honestly lists JCR Q3."},
 {"c":"Q2+","n":"International Journal of Technology (IJTech)","w":"ijtech.eng.ui.ac.id","p":"Faculty of Engineering, Universitas Indonesia","pt":"University","co":"ID","f":"Multidisciplinary","sq":"Q2","sv":0.354,"sy":24,"cq":null,"jq":"ESCI","jf":"1.2","fee":{"t":"apc","v":"~US$1,000 reported — verify"},"sp":"~16 wks (reported)","warn":null,"note":"8 issues/yr, ~170 papers, ~30% rejection rate (official). Sustainable technology focus; univ. announced Q1 Multidisciplinary (SJR Apr 2024 release)."},
 {"c":"Q2+","n":"ETASR — Engineering, Technology & Applied Science Research","w":"etasr.com","p":"Independent (Dr. D. Pylarinos)","pt":"Independent","co":"GR","f":"Multidisciplinary","sq":"Q2","sv":0.35,"sy":25,"cq":null,"jq":null,"jf":null,"fee":{"t":"apc","v":"APC applies — verify"},"sp":"57 d to acceptance (official)","warn":"Very high volume (5,000+ papers, strong growth) — indexed and legitimate, but monitor per screening rules.","note":null},
 {"c":"Q2+","n":"Latin American Journal of Solids and Structures (LAJSS)","w":"lajss.org","p":"Brazilian Society of Mechanical Sciences and Engineering (ABCM)","pt":"Society","co":"BR","f":"Mechanical","sq":"Q2","sv":0.33,"sy":24,"cq":null,"jq":"SCIE","jf":"~1.4–1.5","fee":{"t":"apc","v":"€600 on acceptance; paid fast track €1,200"},"sp":"Paid fast track: publication within 35 d (€1,200)","warn":"Paid ultra-fast track (35 d for €1,200) is an integrity red flag; SCImago lists an individual, not the society, as publisher of record — double-check governance.","note":"SCIE-indexed solids/structures journal on SciELO; Q2 in Aerospace/Automotive/Ocean/Mechanical Eng. (2024)."},
 {"c":"Q2+","n":"Promet — Traffic & Transportation","w":"traffic2.fpz.hr","p":"University of Zagreb, Faculty of Transport and Traffic Sciences","pt":"University","co":"HR","f":"Civil & Transport","sq":"Q2","sv":0.321,"sy":24,"cq":null,"jq":"Q4","jf":"1.1","fee":{"t":"apc","v":"€1,000 + 25% VAT (€1,250 total); explicitly no waivers"},"sp":null,"warn":"High APC for a Q2/Q4 venue with no waiver policy, plus unusual €500 withdrawal fee and €500 'ethical breach penalty fee'.","note":"Traffic engineering, transport planning, logistics, ITS since 1989; SJR 0.321 is its historical peak. Q2 via SJR only."},
-{"c":"Q2+","n":"Sādhanā","w":"via Springer","p":"Indian Academy of Sciences","pt":"Academy","co":"IN","f":"Multidisciplinary","exc":true,"sq":"Q2","sv":0.321,"sy":24,"cq":"Q1","jq":"Q2","jf":"1.6–1.9","fee":{"t":"nofee","v":"♦ no APC reported — verify"},"sp":null,"warn":null,"note":"All engineering branches incl. CS, electronics, energy. Exception entry: Springer-distributed."},
+{"c":"Q2+","n":"Sādhanā","w":"via Springer","u":"link.springer.com/journal/12046","p":"Indian Academy of Sciences","pt":"Academy","co":"IN","f":"Multidisciplinary","exc":true,"sq":"Q2","sv":0.321,"sy":24,"cq":"Q1","jq":"Q2","jf":"1.6–1.9","fee":{"t":"nofee","v":"♦ no APC reported — verify"},"sp":null,"warn":null,"note":"All engineering branches incl. CS, electronics, energy. Exception entry: Springer-distributed."},
 {"c":"Q2+","n":"Scientia Iranica","w":"scientiairanica.sharif.edu","p":"Sharif University of Technology","pt":"University","co":"IR","f":"Multidisciplinary","sq":"Q3","sv":0.304,"sy":24,"cq":"Q2","jq":"Q2","jf":"1.9","fee":{"t":"verify"},"sp":"14 d first decision · 150 d median final (official)","warn":null,"note":"Broad engineering + CS; official speed transparency. Q2 via JCR and CiteScore; SJR says Q3."},
 {"c":"Q2+","n":"Bulletin of the Polish Academy of Sciences: Technical Sciences","w":"journals.pan.pl/bpasts","p":"Polish Academy of Sciences","pt":"Academy","co":"PL","f":"Multidisciplinary","sq":"Q3","sv":0.271,"sy":24,"cq":"Q2","jq":"SCIE","jf":"1.2–1.3","fee":{"t":"apc","v":"2,000 PLN (~€500) up to 8 pp., +250 PLN/page (official, from Jan 2025)"},"sp":null,"warn":null,"note":"Q2 only via CiteScore (Engineering, 55th pct); broad technical scope incl. AI, networks."},
 {"c":"Q3","n":"GRAĐEVINAR — J. of the Croatian Association of Civil Engineers","w":"casopis-gradjevinar.hr","p":"Croatian Association of Civil Engineers (HSGI)","pt":"Society","co":"HR","f":"Civil & Transport","sq":"Q3","sv":0.366,"sy":24,"cq":null,"jq":"Q4","jf":"0.94","fee":{"t":"nofee","v":"♦ No APC; authors pay only per-page translation/proofreading costs"},"sp":null,"warn":null,"note":"Monthly bilingual (HR/EN) society journal on construction, structures, materials; SJR 0.366 is its historical best. JCR places it Q4."},
@@ -587,10 +593,14 @@ function run(){
     const tierTag=j.c==="Q2+"
       ?'<span class="tier-tag t1">Tier 1 · Q2+</span>'
       :'<span class="tier-tag t2">Tier 2 · Q3</span>';
+    const target=j.u||(/^via /.test(j.w)?null:j.w);
+    const site=target
+      ?'<a href="https://'+esc(target)+'" target="_blank" rel="noopener">'+esc(j.w)+'</a>'
+      :esc(j.w);
     return '<div class="mcard">'+
       '<div class="mrank">'+(idx+1)+'</div>'+
       '<div>'+
-        '<div class="mtop"><span class="mname">'+esc(j.n)+(j.exc?' †':'')+'</span><span class="msite">'+esc(j.w)+' · '+esc(COUNTRY[j.co]||j.co)+'</span></div>'+
+        '<div class="mtop"><span class="mname">'+esc(j.n)+(j.exc?' †':'')+'</span><span class="msite">'+site+' · '+esc(COUNTRY[j.co]||j.co)+'</span></div>'+
         '<div class="mmeta">'+tierTag+badges(j)+'<span class="jfield">'+esc(j.f)+'</span></div>'+
         '<div class="mfee">'+(j.noFee?'<span class="diamond">'+esc(j.fee.v||"♦ no fee")+'</span>':esc(j.fee.v||"fees: verify on site"))+
           (j.sp?' · <span style="color:var(--ink-soft)">'+esc(j.sp)+'</span>':'')+'</div>'+
@@ -604,19 +614,131 @@ function run(){
 }
 $("form").addEventListener("submit",e=>{e.preventDefault();run();});
 
-// file loading (plain text)
+// ---- file loading: .txt/.md read directly; .pdf/.docx/.doc extracted client-side ----
+async function inflate(u8,fmt){
+  const ds=new DecompressionStream(fmt);
+  const stream=new Blob([u8]).stream().pipeThrough(ds);
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+function cleanText(s){
+  return s.replace(/ /g," ").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();
+}
+function printableRatio(s){
+  if(!s.length)return 0;
+  let ok=0;
+  for(const ch of s){const c=ch.codePointAt(0);if(c===9||c===10||c===13||(c>=32&&c<0x2500))ok++;}
+  return ok/s.length;
+}
+function decodePdfString(raw){
+  return raw
+    .replace(/\\([0-7]{1,3})/g,(m,o)=>String.fromCharCode(parseInt(o,8)))
+    .replace(/\\n/g,"\n").replace(/\\r/g,"\r").replace(/\\t/g,"\t")
+    .replace(/\\([()\\])/g,"$1");
+}
+async function extractPdfText(buf){
+  const u8=new Uint8Array(buf);
+  const latin=new TextDecoder("latin1").decode(u8);
+  const parts=[];
+  const re=/<<([^]*?)>>\s*stream(\r?\n)/g;
+  let m;
+  while((m=re.exec(latin))){
+    const dict=m[1];
+    const start=m.index+m[0].length;
+    let end=latin.indexOf("endstream",start);
+    if(end<0)continue;
+    while(end>start&&(u8[end-1]===0x0a||u8[end-1]===0x0d))end--;
+    let content=null;
+    const data=u8.subarray(start,end);
+    if(/\/FlateDecode/.test(dict)){
+      try{content=await inflate(data,"deflate");}
+      catch(e){try{content=await inflate(data,"deflate-raw");}catch(e2){continue;}}
+    }else if(!/\/Filter/.test(dict)){
+      content=data;
+    }else continue;
+    const text=new TextDecoder("latin1").decode(content);
+    // pull strings shown inside text blocks (BT ... ET)
+    const bt=/BT([^]*?)ET/g;
+    let b,found=false;
+    while((b=bt.exec(text))){
+      const strs=b[1].match(/\((?:\\.|[^\\()])*\)/g);
+      if(!strs)continue;
+      const line=strs.map(s=>decodePdfString(s.slice(1,-1))).join(" ");
+      if(printableRatio(line)>0.75&&/[a-zA-Z]{2}/.test(line)){parts.push(line);found=true;}
+    }
+    if(found)parts.push("\n");
+  }
+  const out=cleanText(parts.join(" "));
+  if(out.replace(/[^a-zA-Z]/g,"").length<40)
+    throw new Error("This PDF stores text in a form I can't read (scanned or glyph-encoded) — paste the text instead.");
+  return out;
+}
+function decodeXmlEntities(s){
+  return s.replace(/&(amp|lt|gt|quot|apos|#x?[0-9a-fA-F]+);/g,(m,e)=>{
+    if(e==="amp")return "&";if(e==="lt")return "<";if(e==="gt")return ">";
+    if(e==="quot")return '"';if(e==="apos")return "'";
+    return String.fromCodePoint(parseInt(e[1]==="x"?e.slice(2):e.slice(1),e[1]==="x"?16:10));
+  });
+}
+async function extractDocxText(buf){
+  const u8=new Uint8Array(buf);
+  const dv=new DataView(buf);
+  let eocd=-1;
+  for(let i=u8.length-22;i>=Math.max(0,u8.length-22-65536);i--){
+    if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;}
+  }
+  if(eocd<0)throw new Error("Not a valid .docx file.");
+  const n=dv.getUint16(eocd+10,true);
+  let p=dv.getUint32(eocd+16,true);
+  const td=new TextDecoder();
+  let entry=null;
+  for(let k=0;k<n;k++){
+    if(dv.getUint32(p,true)!==0x02014b50)break;
+    const method=dv.getUint16(p+10,true),csize=dv.getUint32(p+20,true),
+      nlen=dv.getUint16(p+28,true),elen=dv.getUint16(p+30,true),clen=dv.getUint16(p+32,true),
+      lho=dv.getUint32(p+42,true);
+    if(td.decode(u8.subarray(p+46,p+46+nlen))==="word/document.xml"){entry={method,csize,lho};break;}
+    p+=46+nlen+elen+clen;
+  }
+  if(!entry)throw new Error("No document body found in this .docx.");
+  const lnlen=dv.getUint16(entry.lho+26,true),lelen=dv.getUint16(entry.lho+28,true);
+  const dstart=entry.lho+30+lnlen+lelen;
+  const raw=u8.subarray(dstart,dstart+entry.csize);
+  const xmlBytes=entry.method===8?await inflate(raw,"deflate-raw"):raw;
+  const xml=new TextDecoder().decode(xmlBytes);
+  const text=xml
+    .replace(/<w:tab[^>]*>/g,"\t").replace(/<w:br[^>]*>/g,"\n")
+    .replace(/<\/w:p>/g,"\n").replace(/<[^>]+>/g,"");
+  return cleanText(decodeXmlEntities(text));
+}
+function extractDocText(buf){
+  // legacy binary .doc: best-effort scrape of printable runs
+  const latin=new TextDecoder("latin1").decode(new Uint8Array(buf));
+  const runs=latin.match(/[\x20-\x7EÀ-ɏ]{5,}/g)||[];
+  const out=cleanText(runs.filter(r=>/[a-zA-Z]{3}/.test(r)&&!/^[\\{}@#%]/.test(r)).join(" "));
+  if(out.replace(/[^a-zA-Z]/g,"").length<40)
+    throw new Error("Couldn't extract readable text from this .doc — paste the text instead (or save as .docx).");
+  return out;
+}
 $("fileBtn").addEventListener("click",()=>$("file").click());
-$("file").addEventListener("change",e=>{
+$("file").addEventListener("change",async e=>{
   const f=e.target.files&&e.target.files[0];
   if(!f)return;
-  if(f.size>2*1024*1024){$("fileHint").textContent="File too large (max 2 MB) — paste the text instead.";return;}
-  const reader=new FileReader();
-  reader.onload=()=>{
-    $("abstract").value=String(reader.result||"").slice(0,20000);
-    $("fileHint").textContent="Loaded “"+f.name+"” — press Find matching journals.";
-  };
-  reader.onerror=()=>{$("fileHint").textContent="Couldn't read that file — paste the text instead.";};
-  reader.readAsText(f);
+  const hint=$("fileHint");
+  if(f.size>10*1024*1024){hint.textContent="File too large (max 10 MB) — paste the text instead.";return;}
+  const ext=(f.name.split(".").pop()||"").toLowerCase();
+  hint.textContent="Reading “"+f.name+"”…";
+  try{
+    let text;
+    if(ext==="pdf")text=await extractPdfText(await f.arrayBuffer());
+    else if(ext==="docx")text=await extractDocxText(await f.arrayBuffer());
+    else if(ext==="doc")text=extractDocText(await f.arrayBuffer());
+    else text=await f.text();
+    $("abstract").value=text.slice(0,20000);
+    hint.textContent="Loaded “"+f.name+"” — check the text, then press Find matching journals.";
+  }catch(err){
+    hint.textContent=(err&&err.message)||"Couldn't read that file — paste the text instead.";
+  }
+  e.target.value="";
 });
 
 // --- theme toggle ---
