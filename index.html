@@ -425,14 +425,48 @@ const J=[
 {"c":"Q3","n":"Opto-Electronics Review","w":"journals.pan.pl/opelre","p":"Polish Academy of Sciences + SEP","pt":"Academy","co":"PL","f":"Electrical & Electronics","sq":"Q3","sv":null,"sy":24,"cq":null,"jq":"SCIE","jf":"~1.0","fee":{"t":"verify"},"sp":null,"warn":null,"note":"Optical sensors, image processing, photonics; CiteScore 5.0, SNIP 0.97."}
 ];
 const RANK={Q1:1,Q2:2,Q3:3,Q4:4};
+// --- forgiving search: accent folding, abbreviation expansion, fuzzy words ---
+function fold(s){
+  return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/đ/g,"d").replace(/ł/g,"l").replace(/ø/g,"o").replace(/æ/g,"ae").replace(/ß/g,"ss");
+}
+const ABBR={int:"international",intl:"international",j:"journal",jour:"journal",jnl:"journal",
+  trans:"transactions",univ:"university",sci:"science",eng:"engineering",tech:"technology"};
+const STOP=new Set(["of","the","and","for","in","on","a","an"]);
+function norm(s){
+  return fold(s).replace(/[^a-z0-9]+/g," ").trim().split(/\s+/)
+    .filter(Boolean).map(w=>ABBR[w]||w).join(" ");
+}
+function lev(a,b,max){
+  if(Math.abs(a.length-b.length)>max)return max+1;
+  let prev=Array.from({length:b.length+1},(_,i)=>i);
+  for(let i=1;i<=a.length;i++){
+    const cur=[i];
+    let rowMin=i;
+    for(let k=1;k<=b.length;k++){
+      cur[k]=Math.min(prev[k]+1,cur[k-1]+1,prev[k-1]+(a[i-1]===b[k-1]?0:1));
+      if(cur[k]<rowMin)rowMin=cur[k];
+    }
+    if(rowMin>max)return max+1;
+    prev=cur;
+  }
+  return prev[b.length];
+}
 J.forEach((j,i)=>{
   j.i=i+1;
   const qs=[j.sq,j.cq,j.jq].filter(q=>RANK[q]);
   j.best=qs.length?qs.sort((a,b)=>RANK[a]-RANK[b])[0]:null;
   j.noFee=j.fee.t==="nofee";
   j.ifNum=j.jf?parseFloat(j.jf):null;
-  j.hay=[j.n,j.w,j.p,j.pt,j.f,j.co,COUNTRY[j.co]||"",j.fee.v||"",j.sp||"",j.warn||"",j.note||"",j.sq||"",j.jq||"",j.cq||""].join(" ").toLowerCase();
+  j.hay=norm([j.n,j.w,j.u||"",j.p,j.pt,j.f,j.co,COUNTRY[j.co]||"",j.fee.v||"",j.sp||"",j.warn||"",j.note||"",j.sq||"",j.jq||"",j.cq||""].join(" "));
+  j.hayWords=[...new Set(j.hay.split(" "))];
 });
+function termHit(j,term){
+  if(j.hay.includes(term))return true;
+  if(term.length<4)return false;
+  const max=term.length>=8?2:1;
+  return j.hayWords.some(w=>lev(term,w,max)<=max);
+}
 const $=id=>document.getElementById(id);
 
 const countries=[...new Set(J.map(j=>j.co))].sort((a,b)=>(COUNTRY[a]||a).localeCompare(COUNTRY[b]||b));
@@ -486,8 +520,8 @@ function pass(j){
   if(state.clean&&j.warn)return false;
   if(state.speed&&!j.sp)return false;
   if(state.q){
-    for(const term of state.q.split(/\s+/).filter(Boolean)){
-      if(!j.hay.includes(term))return false;
+    for(const term of norm(state.q).split(" ").filter(t=>t&&!STOP.has(t))){
+      if(!termHit(j,term))return false;
     }
   }
   return true;
