@@ -1,14 +1,16 @@
 # journals
 
-Curated, individually verified shortlist of **67 journals** in applied
+Curated, individually verified shortlist of **115 journals** in applied
 science, computer science, and engineering — plus forensic sciences and
-engineering & science education — from non-commercial publishers:
-universities, national academies, scientific societies, government
-institutes, and nonprofits. No purely commercial publishing houses (entries
-owned by a qualifying body but distributed by a commercial house are marked
-as exceptions, †). Civil-engineering, transport, and energy venues are
-deliberately out of scope (17 previously verified entries were removed by
-scope decision; they remain in the git history).
+engineering & science education — with **49 no-fee (diamond/subsidized)
+routes**. Publisher rule: journals owned by big commercial houses (MDPI,
+Springer Nature, Elsevier, Wiley, Taylor & Francis, etc.) are excluded.
+Allowed owners: universities, national academies, scientific societies,
+government institutes, nonprofits — marked † when a big house merely
+distributes them — plus a few small independent publishers (OmniaScience,
+Scientia Socialis, Tempus), each flagged as such. Civil-engineering,
+transport, and energy venues are deliberately out of scope (17 previously
+verified entries removed by scope decision; they remain in git history).
 
 ## Contents
 
