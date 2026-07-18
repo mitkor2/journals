@@ -1,10 +1,14 @@
 # journals
 
-Curated, individually verified shortlist of **60 engineering and computing
-journals** from non-commercial publishers — universities, national academies,
-scientific societies, government institutes, and nonprofits. No purely
-commercial publishing houses (a few entries are owned by a qualifying body but
-distributed by a commercial house; these are marked as exceptions, †).
+Curated, individually verified shortlist of **67 journals** in applied
+science, computer science, and engineering — plus forensic sciences and
+engineering & science education — from non-commercial publishers:
+universities, national academies, scientific societies, government
+institutes, and nonprofits. No purely commercial publishing houses (entries
+owned by a qualifying body but distributed by a commercial house are marked
+as exceptions, †). Civil-engineering, transport, and energy venues are
+deliberately out of scope (17 previously verified entries were removed by
+scope decision; they remain in the git history).
 
 ## Contents
 
@@ -23,13 +27,15 @@ distributed by a commercial house; these are marked as exceptions, †).
 
 ## Verification
 
-Data verified 17 July 2026 against SCImago, official journal/publisher sites,
+Data verified 17–18 July 2026 against SCImago, official journal/publisher sites,
 DOAJ, and WoS-linked sources. Where ranking systems disagree, all quartiles
 are shown. Integrity flags (⚠) mark high volume, high self-citation,
 anomalous citation metrics, or advertised ultra-fast review.
 
-Excluded after verification (Q4 in all current systems):
-Facta Universitatis, Series: Electronics and Energetics; Mechanika (KTU).
+Excluded after verification (Q4-only): Facta Universitatis, Series:
+Electronics and Energetics; Mechanika (KTU); Informacije MIDEM; JDFSL.
+Excluded for commercial ownership: J. of Baltic Science Education, JOTSE,
+Int. J. of Engineering Education (Tempus).
 
 ## GitHub Pages
 
