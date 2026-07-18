@@ -1,9 +1,12 @@
 # journals
 
-Curated, individually verified shortlist of **115 journals** in applied
+Curated, individually verified shortlist of **121 journals** in applied
 science, computer science, and engineering — plus forensic sciences and
-engineering & science education — with **49 no-fee (diamond/subsidized)
-routes**. Publisher rule: journals owned by big commercial houses (MDPI,
+engineering & science education — with 50+ no-fee (diamond/subsidized)
+routes. Each journal lists its **accepted article types** (research,
+reviews, letters, short communications, case reports, data papers,
+surveys/tutorials, technical notes — audited from author guidelines),
+filterable on both pages. Publisher rule: journals owned by big commercial houses (MDPI,
 Springer Nature, Elsevier, Wiley, Taylor & Francis, etc.) are excluded.
 Allowed owners: universities, national academies, scientific societies,
 government institutes, nonprofits — marked † when a big house merely
