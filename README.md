@@ -1,8 +1,8 @@
 # journals
 
-Curated, individually verified shortlist of **121 journals** in applied
-science, computer science, and engineering — plus forensic sciences and
-engineering & science education — with 50+ no-fee (diamond/subsidized)
+Curated, individually verified shortlist of **129 journals** in applied
+science, computer science, and engineering — plus forensic sciences, engineering & science
+education, and data journals — with 50+ no-fee (diamond/subsidized)
 routes. Each journal lists its **accepted article types** (research,
 reviews, letters, short communications, case reports, data papers,
 surveys/tutorials, technical notes — audited from author guidelines),
